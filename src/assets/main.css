@@ -1,0 +1,60 @@
+:root {
+    --background-color: rgb(30, 30, 38);
+
+    --card-color: dodgerblue;
+    --used-card-color: rgb(120, 187, 255);
+    --card-text-color: white;
+
+    --ui-color: rgb(16, 16, 24);
+    --ui-accent-color: rgb(31, 31, 61);
+    --ui-text-color: white;
+}
+html {
+    width: 100%;
+    height: 100%;
+}
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+p, a, h2 {
+    color: var(--ui-text-color);
+    font-family: Arial;
+    margin: 0;
+    text-decoration: none;
+    text-align: center;
+}
+h1 {
+    color: var(--ui-text-color);
+    font-family: Arial;
+    text-align: center;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+#app {
+    width: 100%;
+    height: 100%;
+    background-color: var(--background-color);
+    overflow: auto;
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+
+.caption-enter-active,
+.caption-leave-active {
+    transition: transform 0.5s ease;
+}
+
+.caption-enter-from,
+.caption-leave-to {
+    transform: translate(0, 100%);
+}

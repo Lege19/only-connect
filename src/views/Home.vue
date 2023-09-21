@@ -1,0 +1,14 @@
+<script setup lang="ts">
+import VueTitle from "@/components/vue-title.vue";
+import HomeHeader from "@/components/home-header.vue";
+</script>
+
+<template>
+    <VueTitle title="Only Connect"></VueTitle>
+    <header>
+        <HomeHeader></HomeHeader>
+    </header>
+    <main>
+        <h1>Only Connect</h1>
+    </main>
+</template>
