@@ -11,21 +11,14 @@ import GroupCation from "../group-caption.vue";
 
 import { computed } from "vue";
 
-quizProgress.questionProgress = 0;
-const question = computed(() => {
-    const round = quiz.json!.rounds[quizProgress.round!];
-    return round.questions[quizProgress.question!];
-});
 const cards = computed(() => {
-    return (question.value as unknown as Group).cards.slice(0, Math.min(quizProgress.questionProgress! + 1, 4));
+    return (quizProgress.questionObj as Group).cards.slice(0, Math.min(quizProgress.questionProgress! + 1, 4));
 });
 
 function next() {
-    quizProgress.questionProgress!++;
+    quizProgress.forward();
     if (quizProgress.questionProgress == 5) {
-        quizProgress.questionsCompleted![quizProgress.question!] = true;
-        quizProgress.question = null;
-        quizProgress.questionProgress = undefined;
+        quizProgress.completeQuestion();
     }
 }
 </script>
@@ -36,7 +29,7 @@ function next() {
             <GenericCard v-for="[index, card] in cards.entries()" class="card" :key="index" :card="card"></GenericCard>
         </TransitionGroup>
         <Transition name="caption">
-            <GroupCation v-if="quizProgress.questionProgress == 4">{{ (question as Group).name }}</GroupCation>
+            <GroupCation v-if="quizProgress.questionProgress == 4">{{ (quizProgress.questionObj! as Group).name }}</GroupCation>
         </Transition>
     </div>
         

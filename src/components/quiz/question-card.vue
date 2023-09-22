@@ -8,7 +8,6 @@ const hieroglyphs = ["𓇌", "𓃭", "𓎛", "𓆑", "𓈗", "𓂀"];
 const props = defineProps<{
     text?: string,
     index: number,
-    offset?: [number, number],
     used: boolean
 }>();
 const title = computed(() => {
@@ -16,18 +15,16 @@ const title = computed(() => {
     if (props.index === undefined) return "Place holder"
     return hieroglyphs[props.index];
 });
-const offset = computed(() => `x:${props.offset??[0, 0][0]};y:${props.offset??[0, 0][1]}`);
 
 function clicked() {
     if (props.used) return;
-    quizProgress.question = props.index;
+    quizProgress.enterQuestion(props.index);
 }
 </script>
 
 <template>
     <div 
      class="card" 
-     :style="offset" 
      :class="{usedCard: props.used}" 
      @click="clicked"
     >

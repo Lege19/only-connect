@@ -24,7 +24,7 @@ const round = computed(() => {
 const mainComponent = computed(() => {
     if (!quizProgress.roundStarted) return RoundTitle;
     if (round.value?.type == RoundType.Vowel) return VowelRound;
-    if (quizProgress.question == null) return QuestionSelection;
+    if (quizProgress.question === null) return QuestionSelection;
     switch (round.value?.type) {
         case RoundType.Connection:
             return ConnectionQuestion;
