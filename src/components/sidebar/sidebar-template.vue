@@ -8,7 +8,8 @@ const showSidebar = ref(false);
 const clickScope: Ref<Element|null> = ref(null)!;
 
 window.addEventListener("click", (e) => {
-    if (!clickScope.value!.contains(e.target! as Node)) {
+    if (!clickScope.value) return;
+    if (!clickScope.value.contains(e.target! as Node)) {
         close();
     }
 });
