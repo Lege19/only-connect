@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { type Group } from "@/quizJson";
 
-import useQuiz from "@/stores/quiz";
-const quiz = useQuiz();
 import useQuizProgress from "@/stores/quizProgress";
 const quizProgress = useQuizProgress();
 
