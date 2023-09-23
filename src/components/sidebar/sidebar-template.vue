@@ -2,31 +2,42 @@
 import HamburgerButton from './hamburger-button.vue';
 import { router } from "@/router/index";
 
-import { ref } from "vue";
+import { ref, type Ref } from "vue";
 const showSidebar = ref(false);
+
+const clickScope: Ref<Element|null> = ref(null)!;
+
+window.addEventListener("click", (e) => {
+    if (!clickScope.value!.contains(e.target! as Node)) {
+        close();
+    }
+});
+
 function change(to: boolean) {
     showSidebar.value = to;
 }
 function close() {
-    if (!showSidebar) return;
+    if (!showSidebar.value) return;
     document.getElementById("hamburgerButton")?.click();
 }
 </script>
 
 <template>
-    <div :class="{'sidebar-open': showSidebar}" class="sidebar-outer">
-        <div class="sidebar-inner" @closeSidebar="change(false)">
-            <img src="@/assets/home.svg" class="home" @click="router.push('/')">
-            <slot name="alignTop" :close="close">
+    <div ref="clickScope">
+        <div :class="{'sidebar-open': showSidebar}" class="sidebar-outer">
+            <div class="sidebar-inner" @closeSidebar="change(false)">
+                <img src="@/assets/home.svg" class="home" @click="router.push('/')">
+                <slot name="alignTop" :close="close">
+                    <div></div>
+                </slot>
                 <div></div>
-            </slot>
-            <div></div>
-            <slot name="alignBottom">
-                <div></div>
-            </slot>
+                <slot name="alignBottom">
+                    <div></div>
+                </slot>
+            </div>
         </div>
-    </div>
-    <HamburgerButton @change="change($event)"></HamburgerButton>
+        <HamburgerButton @change="change($event)"></HamburgerButton>
+    </div> 
 </template>
 
 <style>

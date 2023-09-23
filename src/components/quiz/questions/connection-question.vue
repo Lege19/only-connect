@@ -9,23 +9,23 @@ const quizProgress = useQuizProgress();
 import GenericCard from "../generic-card.vue";
 import GroupCation from "../group-caption.vue";
 
-import { computed } from "vue";
+import { computed, watch } from "vue";
 
 const cards = computed(() => {
     return (quizProgress.questionObj as Group).cards.slice(0, Math.min(quizProgress.questionProgress! + 1, 4));
 });
 
-function next() {
-    quizProgress.forward();
-    if (quizProgress.questionProgress == 5) {
+
+watch(() => quizProgress.questionProgress, (current, prev) => {
+    if (current == 5) {
         quizProgress.completeQuestion();
     }
-}
+});
 </script>
 
 <template>
-    <div class="container">
-        <TransitionGroup tag="div" id="card-group" @click="next">
+    <div class="container" @click="quizProgress.forward">
+        <TransitionGroup tag="div" id="card-group">
             <GenericCard v-for="[index, card] in cards.entries()" class="card" :key="index" :card="card"></GenericCard>
         </TransitionGroup>
         <Transition name="caption">
@@ -46,6 +46,10 @@ function next() {
 }
 .container {
     width: 80%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 

@@ -15,6 +15,8 @@ const mainComponent = computed(() => {
     return QuizTitle;
 });
 
+
+
 watch(() => quizProgress.roundCompleted, (current, old) => {
     if (current) quizProgress.nextRound();
 });
