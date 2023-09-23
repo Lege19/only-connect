@@ -32,6 +32,7 @@ function onclick(event: Event) {
     text-align: left;
 }
 .menu-icon {
+    height: 1em;
     transition: transform 0.2s;
     float: right;
 }
