@@ -114,7 +114,7 @@ export function parseJson(json: any): undefined|Quiz.QuizJson {
 
 
 
-export async function parse(archive: File): Promise<{json: Quiz.QuizJson, files: {[index:string]:string}}|undefined> {
+export async function parse(archive: File|Blob): Promise<{json: Quiz.QuizJson, files: {[index:string]:string}}|undefined> {
     const filesList = await unpack(archive);
     if (!filesList) {
         console.error("failed to unpack archive");
