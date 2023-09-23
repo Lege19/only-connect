@@ -16,6 +16,7 @@ const useQuizProgress = defineStore("quizProgress", () => {
 
     const roundCompleted: ComputedRef<boolean|undefined> = computed(() => {
         if (!playing.value) return undefined;
+        if (!roundStarted.value) return undefined;
         return questionsCompleted.value!.every(x => x);
     });
     const roundObj: ComputedRef<Round|undefined> = computed(() => {
