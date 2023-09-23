@@ -2,7 +2,6 @@
 import SidebarTemplate from "./sidebar/sidebar-template.vue";
 import RestartQuiz from "./sidebar/reset-quiz.vue";
 import OpenQuiz from "./sidebar/open-quiz.vue";
-
 </script>
 
 <template>

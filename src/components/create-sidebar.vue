@@ -7,7 +7,7 @@ import ExtractArchive from "./sidebar/extract-archive.vue";
 
 <template>
     <SidebarTemplate>
-        <template #align-top="props">
+        <template #alignTop="props">
             <CreateArchive></CreateArchive>
             <ExtractArchive></ExtractArchive>
         </template>

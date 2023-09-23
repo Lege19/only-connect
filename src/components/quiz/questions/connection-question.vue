@@ -51,6 +51,4 @@ watch(() => quizProgress.questionProgress, (current, prev) => {
     flex-direction: column;
     justify-content: center;
 }
-
-
 </style>
