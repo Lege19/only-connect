@@ -164,7 +164,7 @@ const useQuizProgress = defineStore("quizProgress", () => {
         };
 
         if (!playing.value && !completed.value) return;
-        if (question.value) {
+        if (question.value != null) {
             if (questionProgress.value! === 0) {
                 question.value = null;
                 questionProgress.value = undefined;
@@ -173,7 +173,6 @@ const useQuizProgress = defineStore("quizProgress", () => {
             questionProgress.value!--;
             return;
         }
-        prevRound();
     }
 
     function completeQuestion() {
