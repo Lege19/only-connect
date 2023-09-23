@@ -5,7 +5,7 @@ import useQuiz from "@/stores/quiz";
 const quiz = useQuiz();
 
 (async () => {
-    quiz.open(await (await fetch("src/assets/quiz.ocq")).blob());
+    quiz.open(await (await fetch("public/quiz.ocq")).blob());
 }) ();
 
 const props = defineProps<{
