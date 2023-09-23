@@ -31,7 +31,7 @@ async function openFile(event: Event) {
         <SidebarItem>
             Open Quiz
             <template #icon>
-                <img src="src/assets/upload.svg">
+                <img src="@/assets/upload.svg">
             </template>
         </SidebarItem>
     </label>
