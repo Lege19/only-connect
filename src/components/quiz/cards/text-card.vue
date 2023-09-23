@@ -13,5 +13,6 @@ const props = defineProps({
 <style scoped>
 p {
     text-align: center;
+    font-size: 1.5em;
 }
 </style>

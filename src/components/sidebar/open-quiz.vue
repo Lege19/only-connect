@@ -26,7 +26,7 @@ async function openFile(event: Event) {
 </script>
 
 <template>
-    <label>
+    <label style="height: fit-content">
         <input type="file" style="display:none" @input="openFile($event)" accept=".ocq">
         <SidebarItem>
             Open Quiz

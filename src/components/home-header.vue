@@ -21,14 +21,11 @@ div {
     display: grid;
     grid-template-rows: 1fr;
     grid-template-columns: repeat(3, 1fr);
-    column-gap: 6px;
-    padding: 6px;
+    background-color: var(--ui-color);
 }
 span {
     background-color: var(--ui-color);
     transition: background-color 0.2s;
-    border-radius: 6px;
-    height: 3em;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -39,5 +36,6 @@ span:hover {
 }
 p {
     text-align: center;
+    padding: 1em;
 }
 </style>

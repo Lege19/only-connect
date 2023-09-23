@@ -15,6 +15,14 @@ const mainComponent = computed(() => {
     return QuizTitle;
 });
 
+document.onkeydown = (e) => {
+    if ((e as KeyboardEvent).key == "ArrowLeft") {
+        quizProgress.back();
+    } else if ((e as KeyboardEvent).key == "ArrowRight") {
+        quizProgress.forward();
+    }
+};
+
 watch(() => quizProgress.roundCompleted, (current, old) => {
     if (current) quizProgress.nextRound();
 });
