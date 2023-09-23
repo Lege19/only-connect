@@ -3,10 +3,10 @@ import SidebarItem from "./sidebar-item.vue";
 
 import useQuiz from "@/stores/quiz";
 const quiz = useQuiz();
-import useQuizProgress from "@/stores/quizProgress";
-const quizProgress = useQuizProgress();
 
-import { parse } from "@/quizParser";
+(async () => {
+    quiz.open(await (await fetch("src/assets/quiz.ocq")).blob());
+}) ();
 
 const props = defineProps<{
     close?: Function
@@ -16,12 +16,8 @@ async function openFile(event: Event) {
     if (!event.target) return;
     const fileList = (event.target as HTMLInputElement).files;
     if (!fileList) return;
-    const parsedQuiz = await parse(fileList[0]);
-    if (!parsedQuiz) return;
-    quiz.json = parsedQuiz.json;
-    quiz.files = parsedQuiz.files;
+    quiz.open(fileList[0]);
     if (props.close) props.close();
-    quizProgress.reset();
 }
 </script>
 
