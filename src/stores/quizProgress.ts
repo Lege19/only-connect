@@ -156,6 +156,7 @@ const useQuizProgress = defineStore("quizProgress", () => {
             return;
         }
         if (question.value === null) return;
+        if (roundObj.value?.type == 2 && questionProgress.value < 4) return;//wall round doesn't use questionProgress
         questionProgress.value!++;
     }
     function back() {
@@ -171,6 +172,7 @@ const useQuizProgress = defineStore("quizProgress", () => {
                 questionProgress.value = undefined;
                 return;
             }
+            if (roundObj.value?.type == 2 && questionProgress.value < 5) return;//wall round doesn't use questionProgress
             questionProgress.value!--;
             return;
         }

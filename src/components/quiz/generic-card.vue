@@ -10,7 +10,7 @@ const props = defineProps<{
     group?: number
 }>();
 const colorOverride = computed(() => {
-    if (!props.group || !(props.group in GroupColor)) return "";
+    if (props.group === undefined || !(props.group in GroupColor)) return "";
     return `background-color: ${GroupColor[props.group]}`;
 });
 function getCardType() {
@@ -38,5 +38,6 @@ function getCardType() {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    transition: background-color 0.2s;
 }
 </style>
