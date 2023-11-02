@@ -76,10 +76,12 @@ function pullCardToFront(index: number) {
 <template>
     <div class="question-container">
         <TransitionGroup tag="div" name="wall" class="wall-container">
-            <GenericCard v-for="index in order" :key="index"
-                :card="cards[index]"
-                @click="cardClicked(index)" :group="colourIndexes[index]"
-            ></GenericCard>
+            <template v-for="index in order" :key="index">
+                <GenericCard
+                    :card="cards[index]"
+                    @click="cardClicked(index)" :group="colourIndexes[index]"
+                ></GenericCard>
+            </template>
         </TransitionGroup>
         <Transition name="caption">
             <GroupCaption v-if="quizProgress.questionProgress! > 4" :key="quizProgress.questionProgress">
