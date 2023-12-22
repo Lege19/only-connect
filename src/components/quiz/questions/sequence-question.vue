@@ -15,7 +15,7 @@ const cards = computed(() => {
 
 
 watch(() => quizProgress.questionProgress, (current, prev) => {
-    if (current == 4) {
+    if (current! >= 4) {
         quizProgress.completeQuestion();
     }
 });

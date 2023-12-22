@@ -18,7 +18,7 @@ const mainComponent = computed(() => {
 document.onkeydown = (e) => {
     if ((e as KeyboardEvent).key == "ArrowLeft") {
         quizProgress.back();
-    } else if ((e as KeyboardEvent).key == "ArrowRight") {
+    } else if ((e as KeyboardEvent).key == "ArrowRight" || (e as KeyboardEvent).key == " ") {
         quizProgress.forward();
     }
 };
