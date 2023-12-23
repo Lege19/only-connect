@@ -2,8 +2,14 @@ import { defineStore } from "pinia";
 import { ref, type Ref, computed, type ComputedRef} from "vue";
 import useQuiz from "./quiz";
 
-import { type Round, type Question } from "../quizJson";
+import { type Round, type Question, RoundType } from "../quizJson";
 
+export interface WallProgress {
+    selectedCards: number[],
+    groupsFound: number[],
+    cardOrder: number[],
+    foundAllGroups: boolean
+}
 const useQuizProgress = defineStore("quizProgress", () => {
     const quiz = useQuiz();
     const playing: Ref<boolean> = ref(false);
@@ -12,6 +18,7 @@ const useQuizProgress = defineStore("quizProgress", () => {
     const roundStarted: Ref<boolean|undefined> = ref(undefined);
     const question: Ref<number|null|undefined> = ref(undefined);
     const questionProgress: Ref<number|undefined> = ref(undefined);
+    const wallProgress: Ref<WallProgress|undefined> = ref(undefined);
     const questionsCompleted: Ref<boolean[]|undefined> = ref(undefined);
 
     const roundCompleted: ComputedRef<boolean|undefined> = computed(() => {
@@ -38,6 +45,7 @@ const useQuizProgress = defineStore("quizProgress", () => {
         roundStarted.value = undefined;
         question.value = undefined;
         questionProgress.value = undefined;
+        wallProgress.value = undefined;
         questionsCompleted.value = undefined;
     }
     function start() {
@@ -52,6 +60,7 @@ const useQuizProgress = defineStore("quizProgress", () => {
         roundStarted.value = false;
         question.value = undefined;
         questionProgress.value = undefined;
+        wallProgress.value = undefined;
         resetQuestionsCompleted();
     }
     function end() {
@@ -66,6 +75,7 @@ const useQuizProgress = defineStore("quizProgress", () => {
         roundStarted.value = undefined;
         question.value = undefined;
         questionProgress.value = undefined;
+        wallProgress.value = undefined;
         questionsCompleted.value = undefined;
     }
 
@@ -88,6 +98,7 @@ const useQuizProgress = defineStore("quizProgress", () => {
         roundStarted.value = false;
         question.value = undefined;
         questionProgress.value = undefined;
+        wallProgress.value = undefined;
         questionsCompleted.value = undefined;
     }
     function prevRound() {
@@ -112,6 +123,7 @@ const useQuizProgress = defineStore("quizProgress", () => {
         roundStarted.value = false;
         question.value = undefined;
         questionProgress.value = undefined;
+        wallProgress.value = undefined;
         questionsCompleted.value = undefined;
     }
     function startRound() {
@@ -125,6 +137,7 @@ const useQuizProgress = defineStore("quizProgress", () => {
         roundStarted.value = true;
         question.value = null;
         questionProgress.value = undefined;
+        wallProgress.value = undefined;
         resetQuestionsCompleted();
     }
     function resetQuestionsCompleted() {
@@ -156,6 +169,9 @@ const useQuizProgress = defineStore("quizProgress", () => {
             return;
         }
         if (question.value === null) return;
+        if (roundObj.value?.type === RoundType.Wall && !wallProgress.value!.foundAllGroups) {
+            return;
+        }
         questionProgress.value!++;
     }
     function back() {
@@ -165,15 +181,28 @@ const useQuizProgress = defineStore("quizProgress", () => {
         };
 
         if (!playing.value && !completed.value) return;
-        if (question.value != null) {
+        if (question.value === null) return;
+        
+        if (roundObj.value?.type == RoundType.Wall) {
             if (questionProgress.value! === 0) {
-                question.value = null;
-                questionProgress.value = undefined;
-                return;
+                if (wallProgress.value!.selectedCards.length !== 0) {
+                    wallProgress.value!.selectedCards.pop();
+                } else if (wallProgress.value!.groupsFound.length !== 0) {
+                    wallProgress.value!.groupsFound.pop();
+                    wallProgress.value!.foundAllGroups = false;
+                } else {
+                    exitQuestion();
+                }
+            } else {
+                questionProgress.value!--;
             }
-            questionProgress.value!--;
             return;
         }
+        if (questionProgress.value! === 0) {
+            exitQuestion()
+            return;
+        }
+        questionProgress.value!--;
     }
 
     function completeQuestion() {
@@ -187,6 +216,7 @@ const useQuizProgress = defineStore("quizProgress", () => {
         if (question.value === null) return;
         questionsCompleted.value![question.value!] = true;
         question.value = null;
+        wallProgress.value = undefined;
         questionProgress.value = undefined;
     }
     function enterQuestion(index: number) {
@@ -201,6 +231,18 @@ const useQuizProgress = defineStore("quizProgress", () => {
         if (quiz.json!.rounds[round.value!].questions[index] == undefined) return;
         question.value = index;
         questionProgress.value = 0;
+
+        if (roundObj.value?.type == RoundType.Wall) {
+            wallProgress.value = {
+                selectedCards: [],
+                groupsFound: [],
+                cardOrder: Array.from(Array(16).keys())
+                    .map(value => ({ value, sort: Math.random() }))
+                    .sort((a, b) => a.sort - b.sort)
+                    .map(({ value }) => value),
+                foundAllGroups: false
+            }
+        }
     }
     function exitQuestion() {
         if (!quiz.loaded) {
@@ -208,7 +250,6 @@ const useQuizProgress = defineStore("quizProgress", () => {
             return;
         };
 
-        if (typeof(question.value) !== "number") return;
         question.value = null;
         questionProgress.value = undefined;
     }
@@ -218,6 +259,7 @@ const useQuizProgress = defineStore("quizProgress", () => {
         round,
         roundStarted,
         question,
+        wallProgress,
         questionProgress,
         questionsCompleted,
         completed,
