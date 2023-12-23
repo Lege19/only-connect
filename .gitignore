@@ -10,6 +10,7 @@ lerna-debug.log*
 node_modules
 .DS_Store
 dist
+christmas-quiz
 dist-ssr
 coverage
 *.local
@@ -28,5 +29,3 @@ coverage
 *.sw?
 
 quiz.json
-
-dist/*
