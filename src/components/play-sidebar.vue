@@ -2,6 +2,7 @@
 import SidebarTemplate from "./sidebar/sidebar-template.vue";
 import RestartQuiz from "./sidebar/reset-quiz.vue";
 import OpenQuiz from "./sidebar/open-quiz.vue";
+import RoundSkipper from "./sidebar/round-skipper.vue";
 </script>
 
 <template>
@@ -9,6 +10,9 @@ import OpenQuiz from "./sidebar/open-quiz.vue";
         <template #alignTop="props">
             <RestartQuiz :close="props.close"></RestartQuiz>
             <OpenQuiz :close="props.close"></OpenQuiz>
+        </template>
+        <template #alignBottom="props">
+            <RoundSkipper></RoundSkipper>
         </template>
     </SidebarTemplate>
 </template>
