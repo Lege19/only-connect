@@ -28,15 +28,3 @@ function getCardType() {
 <template>
     <component :is="getCardType()" :data="props.card.data" :style="colorOverride"></component>
 </template>
-
-<style>
-.card {
-    background-color: var(--card-color);
-    width: 100%;
-    aspect-ratio: 16/9;
-    border-radius: 2vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-</style>
