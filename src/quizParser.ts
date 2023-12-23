@@ -2,17 +2,17 @@ import * as Quiz from "@/quizJson";
 import { unpack } from "@/flatArchive";
 
 export function parseCard(json: any, location: string = "unknown"): undefined|Quiz.Card {
-    if (!("type" in json && "data" in json)) {
+    if (!"data" in json) {
         console.error("error parsing json: invalid card signature\nat " + location);
         return;
     }
-    if (!(json.type in Quiz.CardType)) {
+    if (!((json.type??0) in Quiz.CardType)) {
         console.error("error parsing json: invalid card type\nat " + location);
         return;
     }
 
     return {
-        type: json.type,
+        type: json.type ?? 0,
         data: json.data
     } as Quiz.Card;
 }
