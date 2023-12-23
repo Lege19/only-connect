@@ -2,7 +2,13 @@ import * as Quiz from "@/quizJson";
 import { unpack } from "@/flatArchive";
 
 export function parseCard(json: any, location: string = "unknown"): undefined|Quiz.Card {
-    if (!"data" in json) {
+    if (typeof json == "string") {
+        return {
+            type: 0,
+            data: json
+        } as Quiz.Card
+    }
+    if (!("data" in json)) {
         console.error("error parsing json: invalid card signature\nat " + location);
         return;
     }
