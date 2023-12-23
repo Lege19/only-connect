@@ -86,6 +86,15 @@ h1 {
 .card-enter-active, .card-leave-active {
     transition: all 0.5s ease;
 }
+.vowel-enter-active, .vowel-leave-active, .vowel-move {
+    transition: all 0.5s ease;
+}
+.vowel-leave-active {
+    position: absolute;
+}
+.vowel-enter-from, .vowel-leave-to {
+    opacity: 0;
+}
 
 .card {
     background-color: var(--card-color);

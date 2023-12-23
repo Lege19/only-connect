@@ -135,8 +135,14 @@ const useQuizProgress = defineStore("quizProgress", () => {
         
         if (completed.value) return;
         roundStarted.value = true;
-        question.value = null;
-        questionProgress.value = undefined;
+        if (roundObj.value?.type == RoundType.Vowel) {
+            question.value = 0;
+            questionProgress.value = 0;
+        }
+        else {    
+            question.value = null;
+            questionProgress.value = undefined;
+        }
         wallProgress.value = undefined;
         resetQuestionsCompleted();
     }
@@ -199,8 +205,14 @@ const useQuizProgress = defineStore("quizProgress", () => {
             return;
         }
         if (questionProgress.value! === 0) {
-            exitQuestion()
-            return;
+            if (roundObj.value?.type == RoundType.Vowel) {
+                if (question.value === 0) return;
+                questionProgress.value = 1;
+                question.value! --;
+            } else {
+                exitQuestion()
+                return;
+            }
         }
         questionProgress.value!--;
     }
