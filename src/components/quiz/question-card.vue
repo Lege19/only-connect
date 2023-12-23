@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { ref } from "vue";
 
 import useQuizProgress from "@/stores/quizProgress";
 const quizProgress = useQuizProgress();
@@ -10,11 +10,8 @@ const props = defineProps<{
     index: number,
     used: boolean
 }>();
-const title = computed(() => {
-    if (props.text) return props.text;
-    if (props.index === undefined) return "Place holder"
-    return hieroglyphs[props.index];
-});
+const title = ref(props.text ?? hieroglyphs[props.index]);
+const cardRef = ref(undefined);
 
 function clicked() {
     if (props.used) return;
@@ -27,6 +24,7 @@ function clicked() {
      class="card" 
      :class="{usedCard: props.used}" 
      @click="clicked"
+     ref="cardRef"
     >
         <h2 style="font-size: 2cm">{{ title }}</h2>
     </div>

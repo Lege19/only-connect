@@ -30,7 +30,7 @@ watch(() => quizProgress.roundCompleted, (current, old) => {
 
 <template v-if="quiz.loaded">
     <div id="quiz-player">
-        <transition mode="out-in">
+        <transition mode="out-in" name="fade">
             <component v-if="mainComponent" :is="mainComponent" :key="quizProgress.round"></component>
         </transition>
     </div>

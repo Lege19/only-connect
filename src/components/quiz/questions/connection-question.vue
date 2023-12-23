@@ -23,7 +23,7 @@ watch(() => quizProgress.questionProgress, (current, prev) => {
 
 <template>
     <div class="question-container" @click="quizProgress.forward">
-        <TransitionGroup tag="div" class="card-group">
+        <TransitionGroup tag="div" class="card-group" name="card">
             <GenericCard v-for="[index, card] in cards.entries()" class="card-in-group" :key="index" :card="card"></GenericCard>
         </TransitionGroup>
         <Transition name="caption">
