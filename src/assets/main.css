@@ -76,7 +76,7 @@ h1 {
 }
 
 .wall-move {
-    transition: all 0.25s ease-out;
+    transition: all 1s ease;
 }
 
 .card-enter-from, .card-leave-to {
