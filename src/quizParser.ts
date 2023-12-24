@@ -2,6 +2,7 @@ import * as Quiz from "@/quizJson";
 import { unpack } from "@/flatArchive";
 
 export function parseCard(json: any, location: string = "unknown"): undefined|Quiz.Card {
+    const typeMap = {"text": 0, "img": 1, "audio": 2};
     if (typeof json == "string") {
         return {
             type: 0,
@@ -12,11 +13,10 @@ export function parseCard(json: any, location: string = "unknown"): undefined|Qu
         console.error("error parsing json: invalid card signature\nat " + location);
         return;
     }
-    if (!((json.type??0) in Quiz.CardType || !["text", "img", "audio"].includes(json.type))) {
+    if (!((json.type??0) in Quiz.CardType) && !(json.type in typeMap)) {
         console.error("error parsing json: invalid card type\nat " + location);
         return;
     }
-    const typeMap = {"text": 0, "img": 1, "audio": 2};
     if (typeof(json.type) === "string") return {
         type: typeMap[json.type as keyof typeof typeMap],
         data: json.data
@@ -35,7 +35,7 @@ export function parseGroup(json: any, location: string = "unknown"): undefined|Q
     let currentCard: undefined|Quiz.Card;
     let cards: Quiz.Card[] = [];
     for (let i = 0; i < 4; i++) {
-        currentCard = parseCard(json.cards[i], location + `, card: ${i}`);
+        currentCard = parseCard(json.cards[i], location + `, card: ${i + 1}`);
         if (!currentCard) {
             return;
         }
@@ -64,7 +64,7 @@ export function parseRound(json: any, location: string = "unknown"): undefined|Q
         case Quiz.RoundType.Sequence:
         case "sequence":
             for (let i = 0; i < json.questions.length; i++) {
-                currentQuestion = parseGroup(json.questions[i], location + `, question: ${i}`);
+                currentQuestion = parseGroup(json.questions[i], location + `, question: ${i + 1}`);
                 if (!currentQuestion) {
                     return;
                 }
@@ -78,7 +78,7 @@ export function parseRound(json: any, location: string = "unknown"): undefined|Q
             for (let i = 0; i < json.questions.length; i++) {
                 groups = [];
                 for (let j = 0; j < 4; j++) {
-                    currentGroup = parseGroup(json.questions[i][j], location + `, question: ${i}, group: ${j}`);
+                    currentGroup = parseGroup(json.questions[i][j], location + `, question: ${i + 1}, group: ${j + 1}`);
                     if (!currentGroup) {
                         return;
                     }
@@ -124,7 +124,7 @@ export function parseJson(json: any): undefined|Quiz.QuizJson {
     let currentRound: undefined|Quiz.Round;
 
     for (let i = 0; i < json.rounds.length; i++) {
-        currentRound = parseRound(json.rounds[i], `round: ${i}`)
+        currentRound = parseRound(json.rounds[i], `round: ${i + 1}`)
         if (!currentRound) {
             return;
         }
