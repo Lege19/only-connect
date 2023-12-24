@@ -20,7 +20,7 @@ const caption = computed(() => {
     if (quizProgress.questionProgress! < 2 ) { 
         return undefined;
     }
-    return wallQuestion.value[quizProgress.questionProgress! - 2].name;
+    return wallQuestion.value[quizProgress.wallProgress!.groupsFound[quizProgress.questionProgress! - 2]].name;
 });
 const cardColours = computed(() => {
     let colours = Array(16);
