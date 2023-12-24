@@ -20,7 +20,14 @@ const getImage = computed(() => {
 </script>
 
 <template>
-    <div class="card">
+    <div class="card" style="background-color:transparent">
         <img :src="getImage">
     </div>
 </template>
+<style scoped>
+img {
+    border-radius: 2vh;
+    width: 100%;
+    height: auto;
+}
+</style>
