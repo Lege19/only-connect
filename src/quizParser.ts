@@ -12,15 +12,19 @@ export function parseCard(json: any, location: string = "unknown"): undefined|Qu
         console.error("error parsing json: invalid card signature\nat " + location);
         return;
     }
-    if (!((json.type??0) in Quiz.CardType)) {
+    if (!((json.type??0) in Quiz.CardType || !["text", "img", "audio"].includes(json.type))) {
         console.error("error parsing json: invalid card type\nat " + location);
         return;
     }
-
+    const typeMap = {"text": 0, "img": 1, "audio": 2};
+    if (typeof(json.type) === "string") return {
+        type: typeMap[json.type as keyof typeof typeMap],
+        data: json.data
+    }
     return {
         type: json.type ?? 0,
         data: json.data
-    } as Quiz.Card;
+    }
 }
 export function parseGroup(json: any, location: string = "unknown"): undefined|Quiz.Group {
     if (!("name" in json && "cards" in json)) {
@@ -56,7 +60,9 @@ export function parseRound(json: any, location: string = "unknown"): undefined|Q
     let currentQuestion: undefined|Quiz.Question;
     switch (json.type) {
         case Quiz.RoundType.Connection:
+        case "connection":
         case Quiz.RoundType.Sequence:
+        case "sequence":
             for (let i = 0; i < json.questions.length; i++) {
                 currentQuestion = parseGroup(json.questions[i], location + `, question: ${i}`);
                 if (!currentQuestion) {
@@ -66,6 +72,7 @@ export function parseRound(json: any, location: string = "unknown"): undefined|Q
             }
             break;
         case Quiz.RoundType.Wall:
+        case "wall":
             let currentGroup: undefined|Quiz.Group;
             let groups: Quiz.Group[];
             for (let i = 0; i < json.questions.length; i++) {
@@ -81,6 +88,7 @@ export function parseRound(json: any, location: string = "unknown"): undefined|Q
             }
             break;
         case Quiz.RoundType.Vowel:
+        case "vowel":
             for (let i = 0; i < json.questions.length; i++) {
                 questions.push(json.questions[i]);
             }
@@ -89,6 +97,17 @@ export function parseRound(json: any, location: string = "unknown"): undefined|Q
             console.error("error parsing json: invalid round type\nat " + location + "\ngot " + json.type);
             return;
     }
+    const typeMap = {
+        "connection": Quiz.RoundType.Connection, 
+        "sequence": Quiz.RoundType.Sequence,
+        "wall": Quiz.RoundType.Wall,
+        "vowel": Quiz.RoundType.Vowel
+    };
+    if (typeof(json.type) === "string") return {
+        type: typeMap[json.type as keyof typeof typeMap],
+        name: json.name,
+        questions: questions
+    };
     return {
         type: json.type as Quiz.RoundType,
         name: json.name,
