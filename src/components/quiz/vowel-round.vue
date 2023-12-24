@@ -6,7 +6,7 @@ import VowelQuestion from "./questions/vowel-question.vue";
 </script>
 
 <template>
-    <Transition tag="div" mode="out-in" name="fade">
+    <Transition mode="out-in" name="fade">
         <VowelQuestion :data="quizProgress.questionObj as string|undefined || 'PlaceHolder'" :key="quizProgress.question??0"></VowelQuestion>
     </Transition>
 </template>
