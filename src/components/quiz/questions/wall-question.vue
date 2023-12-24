@@ -7,9 +7,10 @@ const quiz = useQuiz();
 
 import GenericCard from "@/components/quiz/generic-card.vue";
 import GroupCation from "@/components/quiz/group-caption.vue";
-import { computed, ref , watch} from "vue";
+import { computed, onMounted, ref , watch} from "vue";
 import { type Group } from "@/quizJson";
 
+const container = ref(null);
 const cardIndicies = ref(quizProgress.wallProgress?.cardOrder??[]);
 const wallQuestion = computed(() => quizProgress.questionObj! as [Group, Group, Group, Group])
 const cards = computed(() => {
@@ -80,7 +81,7 @@ watch(() => quizProgress.questionProgress, (current, prev) => {
 
 <template>
     <div class="question-container" @click="if (quizProgress.wallProgress?.foundAllGroups) quizProgress.forward();">
-        <TransitionGroup tag="div" class="wall-container" name="wall">
+        <TransitionGroup tag="div" :class="quizProgress.questionProgress! < 2 ? 'wall-container' : 'wall-container wall-container-end'" name="wall" ref="container">
             <GenericCard v-for="cardIndex in cardIndicies" :key="cardIndex" 
                 :card="cards[cardIndex]" @click="cardClicked(cardIndex)"
                 :group="cardColours[cardIndex]" class="wall-card">
@@ -102,5 +103,9 @@ I avoid this by using :where()*/
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
+}
+.wall-container-end {
+    transition: transform 1s ease;
+    transform: translate(0, -70px) scale(0.8, 0.8);
 }
 </style>
