@@ -57,6 +57,7 @@ function close() {
     width: 20vw;
     display: grid;
     grid-template-rows: min-content 1fr min-content;
+    z-index: -10;
 }
 .sidebar-open {
     width: 20vw;
