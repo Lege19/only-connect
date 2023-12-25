@@ -2,7 +2,7 @@
 ###  Vue.js app I created to play homemade Only Connect quizes in a moderately faithful way to the original
 
 ## Creating a quiz
-At some point in the future there may be a quiz editor within the web app, but for now you need to write the files manually
+At some point in the future there may be a quiz editor within the web app, but for now you need to write the files manually.
 ### The structure of the quiz
 Quizes have a title and some number of rounds, each of which is either a Connections round, a Sequence round, a Wall round, or a Vowel round. 
 #### Rounds
@@ -18,7 +18,7 @@ There are two types of card currently supported: text cards and image cards. The
  - althout a .ocq file can be created from any files, in order to be played it _must_ contain a file named "quiz.json"
 
 ### quiz.json
-The "quiz.json" file contains all the information needed to play your quiz. 
+The "quiz.json" file contains all the information needed to play your quiz. You can see an example quiz.json file [here](quiz.json).
 The root object of "quiz.json" should have a "name" field that will be displayed at the start and end of the quiz. And a "rounds" field that will hold an array of rounds.
 
 Each round is an object with a "name" field that is displayed at the start of the round, a "type" field which tells the player how to play the round, and an array of "questions". The type field only has certain options:
