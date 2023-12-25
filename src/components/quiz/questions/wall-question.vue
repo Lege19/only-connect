@@ -33,7 +33,16 @@ const cardColours = computed(() => {
         colours[quizProgress.wallProgress!.selectedCards[i]] = quizProgress.wallProgress!.groupsFound.length
     }
     return colours;
-})
+});
+const cardHighlight = computed(() => {
+    let highlights = Array(16);
+    if (quizProgress.questionProgress! >= 2) {
+        for (let i = 0; i < 4; i++) {
+            highlights[quizProgress.wallProgress!.groupsFound[quizProgress.questionProgress! - 2] * 4 + i] = true;
+        }
+    }
+    return highlights;
+});
 
 function cardClicked(index: number) {
     if (quizProgress.wallProgress!.groupsFound.includes(Math.floor(index/4))) return;
@@ -84,7 +93,7 @@ watch(() => quizProgress.questionProgress, (current, prev) => {
         <TransitionGroup tag="div" :class="quizProgress.questionProgress! < 2 ? 'wall-container' : 'wall-container wall-container-end'" name="wall" ref="container">
             <GenericCard v-for="cardIndex in cardIndicies" :key="cardIndex" 
                 :card="cards[cardIndex]" @click="cardClicked(cardIndex)"
-                :group="cardColours[cardIndex]" class="wall-card">
+                :group="cardColours[cardIndex]" class="wall-card" :highlight="cardHighlight[cardIndex]">
             </GenericCard>
         </TransitionGroup>
         <Transition mode="out-in" name="caption">

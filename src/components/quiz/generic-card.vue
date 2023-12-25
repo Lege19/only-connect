@@ -7,11 +7,18 @@ import { computed } from "vue";
 
 const props = defineProps<{
     card: Card,
-    group?: number
+    group?: number,
+    highlight?: boolean
 }>();
-const colorOverride = computed(() => {
-    if (props.group === undefined || !(props.group in GroupColor)) return "";
-    return `background-color: ${GroupColor[props.group]}`;
+const styleOverride = computed(() => {
+    let style = "";
+    if (props.group !== undefined && props.group in GroupColor) {
+        style = style + `background-color: ${GroupColor[props.group]};`
+    }
+    if (props.highlight) {
+        style = style + "outline: 5px solid white;"
+    }
+    return style;
 });
 function getCardType() {
     switch (props.card.type) {
@@ -26,5 +33,5 @@ function getCardType() {
 </script>
 
 <template>
-    <component :is="getCardType()" :data="props.card.data" :style="colorOverride"></component>
+    <component :is="getCardType()" :data="props.card.data" :style="styleOverride"></component>
 </template>
