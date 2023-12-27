@@ -11,6 +11,7 @@ node_modules
 .DS_Store
 dist
 christmas-quiz
+releases
 dist-ssr
 coverage
 *.local
