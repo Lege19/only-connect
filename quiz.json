@@ -134,11 +134,15 @@
         {
             "type": "vowel",
             "name": "Vowels",
-            "questions": [
-                "TestTest",
-                "AnotherTest",
-                "A Third Test"
-            ]
+            "questions": [{
+                "name": "test questions",
+                "phrases": [
+                    "Test1",
+                    "Test2",
+                    "Test3",
+                    "Test4"
+                ]
+            }]
         }
     ]
 }

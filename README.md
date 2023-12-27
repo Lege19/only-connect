@@ -41,6 +41,6 @@ and the image used must be bundled with the quiz.json file when creating the .oc
 #### For Wall rounds
 In the wall round each question is an array of four groups, each of which have the same format as a Connection/Sequence question.
 #### For Vowel Rounds
-In the vowel rounds each question is a string that will have its vowels and spaces automatically removed and a space inserted into a random position in the string.
+In the vowel rounds each question is another object with a "name", which is displayed as what links the things in the vowel questions. The individual items are in an array called "phrases" and are each strings. These are capitalised, de-voweled, and de-spaced automatically.
 ## Playing your quiz
 Once you have created you .ocq file you can open it in Only Connect Player, it is highly likely that you will have made a mistake somewhere in quiz.json which will cause the quiz to not play properly, if this is the case there should be an error printed in the console which will tell you the type of error and where in quiz.json it was so that you can fix you quiz.json file.
