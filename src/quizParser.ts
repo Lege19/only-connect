@@ -46,6 +46,16 @@ export function parseGroup(json: any, location: string = "unknown"): undefined|Q
         cards: cards as [Quiz.Card, Quiz.Card, Quiz.Card, Quiz.Card]
     };
 }
+export function parseVowelQuestion(json: any, location: string = "unknown"): undefined|Quiz.VowelQuestion {
+    if (!("name" in json) || !("phrases" in json)) {
+        console.log("error parsing json: invalid vowel question signature\nat " + location);
+        return;
+    }
+    return {
+        name: json.name,
+        phrases: json.phrases
+    };
+}
 export function parseRound(json: any, location: string = "unknown"): undefined|Quiz.Round {
     if (!("name" in json && "type" in json && "questions" in json)) {
         console.error("error parsing json: invalid round signature\nat " + location);
@@ -90,7 +100,11 @@ export function parseRound(json: any, location: string = "unknown"): undefined|Q
         case Quiz.RoundType.Vowel:
         case "vowel":
             for (let i = 0; i < json.questions.length; i++) {
-                questions.push(json.questions[i]);
+                currentQuestion = parseVowelQuestion(json.questions[i]);
+                if (!currentQuestion) {
+                    return;
+                }
+                questions.push(currentQuestion);
             }
             break;
         default:

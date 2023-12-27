@@ -207,12 +207,12 @@ const useQuizProgress = defineStore("quizProgress", () => {
         if (questionProgress.value! === 0) {
             if (roundObj.value?.type == RoundType.Vowel) {
                 if (question.value === 0) return;
-                questionProgress.value = 1;
+                questionProgress.value = 0;
                 question.value! --;
             } else {
                 exitQuestion()
-                return;
             }
+            return;
         }
         questionProgress.value!--;
     }

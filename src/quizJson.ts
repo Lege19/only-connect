@@ -24,7 +24,11 @@ export interface Group {
     name: string,
     cards: [Card, Card, Card, Card]
 };
-export type Question = Group|[Group, Group, Group, Group]|string;
+export interface VowelQuestion {
+    name: string,
+    phrases: string[]
+};
+export type Question = Group|[Group, Group, Group, Group]|VowelQuestion;
 export interface Round {
     type: RoundType,
     name: string,
