@@ -28,13 +28,13 @@ function close() {
         <div :class="{'sidebar-open': showSidebar}" class="sidebar-outer">
             <div class="sidebar-inner">
                 <img src="@/assets/home.svg" class="home" @click="router.push('/')">
-                <slot name="alignTop" :close="close">
-                    <div></div>
-                </slot>
+                <div>
+                    <slot name="alignTop" :close="close"></slot>
+                </div>
                 <div></div>
-                <slot name="alignBottom">
-                    <div></div>
-                </slot>
+                <div>
+                <slot name="alignBottom"></slot>
+                </div>
             </div>
         </div>
         <HamburgerButton @change="change($event)"></HamburgerButton>
