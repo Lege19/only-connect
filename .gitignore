@@ -15,6 +15,7 @@ christmas-quiz
 releases
 dist-ssr
 coverage
+src-tauri
 *.local
 
 /cypress/videos/
