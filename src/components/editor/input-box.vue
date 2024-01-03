@@ -11,17 +11,27 @@ onMounted(resizeTextarea);
 </script>
 
 <template>
-    <textarea rows="1" @input="resizeTextarea" ref="textarea" v-model="model"></textarea>
+    <div>
+        <textarea rows="1" @input="resizeTextarea" ref="textarea" v-model="model"></textarea>
+    </div>
 </template>
 
 <style scoped>
+div {
+    background-color: var(--ui-color);
+    padding: 5px;
+    margin: 5px;
+    border-radius: 10px;
+}
 textarea {
     background-color: transparent;
-    border: none;
+    border: 2px none;
     outline: none;
     resize: none;
     color: white;
     font-size: 1em;
     font-family: arial;
+    padding: 0;
+    margin: 0;
 }
 </style>
