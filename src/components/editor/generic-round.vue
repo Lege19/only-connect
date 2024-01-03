@@ -7,13 +7,11 @@ const model: Ref<Round|undefined> = defineModel();
 </script>
 
 <template v-if="model">
-    <div>
-        <InputBox v-model="model!.name"></InputBox>
-        <div class="question-container">
-            <GenericQuestion v-for="i in model!.questions.keys()" 
-            v-model="model!.questions[i]" 
-            :round-type="model!.type"></GenericQuestion>
-        </div>
+    <div class="question-container">
+        <InputBox v-model="model!.name" class="round-name"></InputBox>
+        <GenericQuestion v-for="i in model!.questions.keys()" 
+        v-model="model!.questions[i]" 
+        :round-type="model!.type"></GenericQuestion>
     </div>
 </template>
 
@@ -22,5 +20,8 @@ const model: Ref<Round|undefined> = defineModel();
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1em;
+}
+.round-name {
+    grid-column: 1/span 2;
 }
 </style>

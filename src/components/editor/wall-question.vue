@@ -16,5 +16,6 @@ const model: Ref<Group[]|undefined> = defineModel();
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1em;
+    grid-column: 1/span 2
 }
 </style>
