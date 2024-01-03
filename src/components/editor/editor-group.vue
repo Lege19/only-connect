@@ -6,10 +6,12 @@ const model: Ref<Group|undefined> = defineModel();
 </script>
 
 <template v-if="model">
-    <InputBox v-model="model!.name"></InputBox>
-    <ol>
-        <li v-for="i in model!.cards.keys()">
-            <InputBox v-model="model!.cards[i].data"></InputBox>
-        </li>
-    </ol>
+    <div>
+        <InputBox v-model="model!.name"></InputBox>
+        <ol>
+            <li v-for="i in model!.cards.keys()">
+                <InputBox v-model="model!.cards[i].data"></InputBox>
+            </li>
+        </ol>
+    </div>
 </template>
