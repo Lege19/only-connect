@@ -4,7 +4,6 @@ import HomeHeader from "@/components/home-header.vue";
 </script>
 
 <template>
-    <VueTitle title="Only Connect"></VueTitle>
     <header>
         <HomeHeader></HomeHeader>
     </header>

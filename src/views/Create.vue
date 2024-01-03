@@ -4,6 +4,5 @@ import CreateSidebar from "@/components/create-sidebar.vue";
 </script>
 
 <template>
-    <VueTitle title="Edit"></VueTitle>
     <CreateSidebar></CreateSidebar>
 </template>

@@ -5,7 +5,6 @@ import QuizPlayer from "@/components/quiz-player.vue";
 </script>
 
 <template>
-    <VueTitle title="Only Connect"></VueTitle>
     <PlaySidebar></PlaySidebar>
     <QuizPlayer></QuizPlayer>
     

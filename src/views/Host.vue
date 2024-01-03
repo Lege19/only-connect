@@ -4,6 +4,5 @@ import HostSidebar from "@/components/host-sidebar.vue";
 </script>
 
 <template>
-    <VueTitle title="Only Connect"></VueTitle>
     <HostSidebar></HostSidebar>
 </template>
