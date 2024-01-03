@@ -6,10 +6,12 @@ const model: Ref<VowelQuestion|undefined> = defineModel();
 </script>
 
 <template v-if="model">
-    <InputBox v-model="model!.name"></InputBox>
-    <ol>
-        <li v-for="i in model!.phrases.keys()">
-            <InputBox v-model="model!.phrases[i]"></InputBox>
-        </li>
-    </ol>
+    <div>
+        <InputBox v-model="model!.name"></InputBox>
+        <ol>
+            <li v-for="i in model!.phrases.keys()">
+                <InputBox v-model="model!.phrases[i]"></InputBox>
+            </li>
+        </ol>
+    </div>
 </template>
