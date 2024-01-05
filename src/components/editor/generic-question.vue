@@ -6,7 +6,8 @@ import { type Ref, computed } from "vue";
 import { type Question, RoundType } from "@/quizJson";
 const model: Ref<Question|undefined> = defineModel();
 const props = defineProps<{
-    roundType: RoundType
+    roundType: RoundType,
+    del: () => void
 }>()
 const component = computed(() => {
     switch (props.roundType) {
@@ -22,5 +23,5 @@ const component = computed(() => {
 </script>
 
 <template v-if="model">
-    <component :is="component" v-model="model"></component>
+    <component :is="component" v-model="model" :del="del"></component>
 </template>

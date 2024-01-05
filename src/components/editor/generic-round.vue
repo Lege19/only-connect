@@ -17,6 +17,7 @@ defineProps<{
             </InputBox>
         <GenericQuestion v-for="i in model!.questions.keys()" 
         v-model="model!.questions[i]" 
+        :del="() => {model!.questions.splice(i, 1)}"
         :round-type="model!.type"></GenericQuestion>
         
     </div>
