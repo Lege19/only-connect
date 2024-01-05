@@ -10,7 +10,7 @@ import InputBox from "./editor/input-box.vue";
         <InputBox v-model="quiz.json!.name"></InputBox>
         <ol style="width: 60%">
             <li v-for="i in quiz.json!.rounds.keys()" style="margin-bottom: 1em">
-                <GenericRound v-model="quiz.json!.rounds[i]"></GenericRound>
+                <GenericRound v-model="quiz.json!.rounds[i]" :del="() => {quiz.json!.rounds.splice(i, 1)}"></GenericRound>
             </li>
         </ol>
     </div>

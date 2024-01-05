@@ -13,6 +13,7 @@ onMounted(resizeTextarea);
 <template>
     <div>
         <textarea rows="1" @input="resizeTextarea" ref="textarea" v-model="model"></textarea>
+        <slot></slot>
     </div>
 </template>
 
@@ -22,6 +23,9 @@ div {
     padding: 5px;
     margin: 5px;
     border-radius: 10px;
+    display: grid;
+    grid-template-columns: 1fr max-content;
+    align-items: center;
 }
 textarea {
     background-color: transparent;
