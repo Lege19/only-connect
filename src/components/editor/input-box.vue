@@ -8,11 +8,14 @@ function resizeTextarea() {
     textarea.value.style.height = textarea.value.scrollHeight + "px";
 }
 onMounted(resizeTextarea);
+defineProps<{
+    placeholder?: string
+}>();
 </script>
 
 <template>
     <div>
-        <textarea rows="1" @input="resizeTextarea" ref="textarea" v-model="model"></textarea>
+        <textarea rows="1" @input="resizeTextarea" ref="textarea" v-model="model" :placeholder="placeholder"></textarea>
         <slot></slot>
     </div>
 </template>
