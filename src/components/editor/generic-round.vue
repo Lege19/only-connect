@@ -33,7 +33,6 @@ function addQuestion() {
             })
     }
 }
-function trigger() {triggerRef(model)}
 </script>
 
 <template v-if="model">
@@ -43,7 +42,7 @@ function trigger() {triggerRef(model)}
             </InputBox>
         <GenericQuestion v-for="i in model!.questions.keys()" 
         v-model="model!.questions[i]" 
-        :del="() => {model!.questions.splice(i, 1); trigger}"
+        :del="() => {model!.questions.splice(i, 1)}"
         :round-type="model!.type"></GenericQuestion>
         <NewItem :func="addQuestion"></NewItem>
     </div>
