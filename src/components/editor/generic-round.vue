@@ -38,6 +38,7 @@ function addQuestion() {
 <template v-if="model">
     <div class="round-container">
             <InputBox v-model="model!.name" class="round-name">
+                <p class="round-type">{{ ["Connection", "Sequence", "Wall", "Vowel"][model!.type] }}</p>
                 <DeleteItem :del="del"></DeleteItem>
             </InputBox>
         <GenericQuestion v-for="i in model!.questions.keys()" 
@@ -56,5 +57,9 @@ function addQuestion() {
 }
 .round-name {
     grid-column: 1/span 2;
+}
+.round-type {
+    margin-right: 1em;
+    color: gray;
 }
 </style>
