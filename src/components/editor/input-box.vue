@@ -14,14 +14,16 @@ defineProps<{
 </script>
 
 <template>
-    <div>
+    <div class="container">
         <textarea rows="1" @input="resizeTextarea" ref="textarea" v-model="model" :placeholder="placeholder"></textarea>
-        <slot></slot>
+        <div class="icons">
+            <slot></slot>
+        </div>
     </div>
 </template>
 
 <style scoped>
-div {
+.container {
     background-color: var(--ui-color);
     padding: 5px;
     margin: 5px;
@@ -40,5 +42,10 @@ textarea {
     font-family: arial;
     padding: 0;
     margin: 0;
+}
+.icons {
+    display: flex;
+    align-content: center;
+    
 }
 </style>
