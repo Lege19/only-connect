@@ -1,16 +1,9 @@
 <script setup lang="ts">
-import { type Ref } from "vue";
-const props = defineProps<{
+defineProps<{
     del: () => void
 }>()
 </script>
 
 <template>
-    <div @click="del">
-        <img src="@/assets/cross.svg">
-    </div>
+    <img @click="del" src="@/assets/cross.svg">
 </template>
-
-<style scoped>
-
-</style>
