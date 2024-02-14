@@ -4,9 +4,16 @@ const quiz = useQuiz();
 import GenericRound from "./editor/generic-round.vue";
 import InputBox from "./editor/input-box.vue";
 import { RoundType } from "@/quizJson";
+
+if (!quiz.loaded) {
+    quiz.json = {
+        name: "",
+        rounds: []
+    };
+}
 </script>
 
-<template v-if="quiz.loaded">
+<template>
     <div id="editor-container">
         <InputBox v-model="quiz.json!.name"></InputBox>
         <ol style="width: 60%">

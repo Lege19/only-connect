@@ -4,10 +4,6 @@ import SidebarItem from "./sidebar-item.vue";
 import useQuiz from "@/stores/quiz";
 const quiz = useQuiz();
 
-(async () => {
-    quiz.open(await (await fetch("/quiz.ocq")).blob());
-}) ();
-
 const props = defineProps<{
     close?: Function
 }>();

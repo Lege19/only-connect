@@ -2,7 +2,6 @@
 import SidebarTemplate from "./sidebar/sidebar-template.vue";
 import OpenQuiz from "./sidebar/open-quiz.vue";
 import DownloadQuiz from "./sidebar/download-quiz.vue";
-import CreateArchive from "./sidebar/create-archive.vue";
 import ExtractArchive from "./sidebar/extract-archive.vue";
 </script>
 
@@ -13,7 +12,6 @@ import ExtractArchive from "./sidebar/extract-archive.vue";
             <OpenQuiz></OpenQuiz>
         </template>
         <template #alignBottom="props">
-            <CreateArchive></CreateArchive>
             <ExtractArchive></ExtractArchive>
         </template>
     </SidebarTemplate>
