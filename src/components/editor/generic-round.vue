@@ -30,10 +30,10 @@ function addQuestion() {
             model.value.questions.push(Array(4).fill(blankGroup) as [Group, Group, Group, Group]);
             break;
         case RoundType.Vowel:
-            model.value.questions.push({
+            model.value.questions.push({...{
                 "name": "",
                 "phrases": []
-            })
+            }})
     }
 }
 </script>
