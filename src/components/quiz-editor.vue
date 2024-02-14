@@ -11,7 +11,7 @@ import { RoundType } from "@/quizJson";
         <InputBox v-model="quiz.json!.name"></InputBox>
         <ol style="width: 60%">
             <li v-for="i in quiz.json!.rounds.keys()" style="margin-bottom: 1em">
-                <GenericRound v-model="quiz.json!.rounds[i]" :del="() => {quiz.json!.rounds.splice(i, 1)}"></GenericRound>
+                <GenericRound v-model="quiz.json!.rounds[i]" v-model:move="quiz.json!.rounds" :del="() => {quiz.json!.rounds.splice(i, 1)}" :index="i"></GenericRound>
             </li>
             <div id="new-round-container">
                 <div class="new-round-button" @click="() => {quiz.json!.rounds.push({

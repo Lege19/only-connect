@@ -3,11 +3,14 @@ import InputBox from "./input-box.vue";
 import GenericQuestion from "./generic-question.vue";
 import DeleteItem from "./delete-item.vue";
 import NewItem from "./new-item.vue";
+import MoveItem from "./move-item.vue";
 import { type Ref, triggerRef } from "vue";
 import { RoundType, type Round, CardType, type Card, type Group } from "@/quizJson";
 const model: Ref<Round|undefined> = defineModel();
+const moveModel: Ref<Round[]|undefined> = defineModel("move");
 defineProps<{
-    del: () => void
+    del: () => void,
+    index: number
 }>();
 const blankGroup = {
     "name": "",
@@ -39,6 +42,7 @@ function addQuestion() {
     <div class="round-container">
             <InputBox v-model="model!.name" class="round-name">
                 <p class="round-type">{{ ["Connection", "Sequence", "Wall", "Vowel"][model!.type] }}</p>
+                <MoveItem v-model="moveModel" :index="index"></MoveItem>
                 <DeleteItem :del="del"></DeleteItem>
             </InputBox>
         <GenericQuestion v-for="i in model!.questions.keys()" 
