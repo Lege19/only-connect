@@ -14,7 +14,7 @@ function download() {
     <SidebarItem @click="download">
         Download Quiz
         <template #icon>
-            <img src="@/assets/download.svg">
+            <img src="@/assets/images/download.svg">
         </template>
     </SidebarItem>
 </template>

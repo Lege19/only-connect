@@ -18,8 +18,8 @@ function moveDown() {
 
 <template>
     <div>
-        <img src="@/assets/up.svg" @click="moveUp">
-        <img src="@/assets/down.svg" @click="moveDown">
+        <img src="@/assets/images/up.svg" @click="moveUp">
+        <img src="@/assets/images/down.svg" @click="moveDown">
     </div>
 </template>
 

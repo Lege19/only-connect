@@ -6,7 +6,7 @@ defineProps<{
 
 <template>
     <div class="dashed-outline" @click="func">
-        <img src="@/assets/add.svg">
+        <img src="@/assets/images/add.svg">
     </div>
 </template>
 

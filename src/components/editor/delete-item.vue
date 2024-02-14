@@ -5,5 +5,5 @@ defineProps<{
 </script>
 
 <template>
-    <img @click="del" src="@/assets/cross.svg">
+    <img @click="del" src="@/assets/images/cross.svg">
 </template>
