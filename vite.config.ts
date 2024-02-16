@@ -16,5 +16,5 @@ export default defineConfig({
   define: {
     __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: "true"
   },
-  base: 'https://lege19.github.io/only-connect'
+  base: '/only-connect/'
 })
