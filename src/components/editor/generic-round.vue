@@ -12,22 +12,25 @@ defineProps<{
     del: () => void,
     index: number
 }>();
-const blankGroup = {
-    "name": "",
-    "cards": Array(4).fill({
-        "type": CardType.Text,
-        "data": ""
-    }) as [Card, Card, Card, Card]
-};
+function blankGroup(): Group {
+    return {"name": "",
+        "cards": [
+            {type: CardType.Text, data: ""},
+            {type: CardType.Text, data: ""},
+            {type: CardType.Text, data: ""},
+            {type: CardType.Text, data: ""}
+        ]
+    };
+}
 function addQuestion() {
     if (!model.value) return;
     switch (model.value.type) {
         case RoundType.Connection:
         case RoundType.Sequence:
-            model.value.questions.push(blankGroup);
+            model.value.questions.push(blankGroup());
             break;
         case RoundType.Wall:
-            model.value.questions.push(Array(4).fill(blankGroup) as [Group, Group, Group, Group]);
+            model.value.questions.push(Array.from({length: 4}, blankGroup) as [Group, Group, Group, Group]);
             break;
         case RoundType.Vowel:
             model.value.questions.push({...{
