@@ -27,7 +27,7 @@ function close() {
     <div ref="clickScope">
         <div :class="{'sidebar-open': showSidebar}" class="sidebar-outer">
             <div class="sidebar-inner">
-                <img src="@/assets/home.svg" class="home" @click="router.push('/')">
+                <img src="@/assets/images/home.svg" class="home" @click="router.push('/')">
                 <div>
                     <slot name="alignTop" :close="close"></slot>
                 </div>

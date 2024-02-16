@@ -25,6 +25,10 @@ p, a, h2 {
     text-decoration: none;
     text-align: center;
 }
+ol {
+    color: var(--ui-text-color);
+    font-family: Arial;
+}
 h1 {
     color: var(--ui-text-color);
     font-family: Arial;

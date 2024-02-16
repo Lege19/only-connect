@@ -6,10 +6,10 @@ const quizProgress = useQuizProgress();
 <template>
     <div id="skip-container">
         <div id="back-container" @click="quizProgress.prevRound">
-            <img class="skip-icon" src="@/assets/back.svg">
+            <img class="skip-icon" src="@/assets/images/back.svg">
         </div>
         <div id="forward-container" @click="quizProgress.nextRound">
-            <img class="skip-icon" style="float: right" src="@/assets/forward.svg">
+            <img class="skip-icon" style="float: right" src="@/assets/images/forward.svg">
         </div>
     </div>
 </template>

@@ -20,7 +20,7 @@ function restart() {
     <SidebarItem @click="restart">
         Restart Quiz
         <template #icon>
-            <img src="@/assets/reset.svg">
+            <img src="@/assets/images/reset.svg">
         </template>
     </SidebarItem>
 </template>

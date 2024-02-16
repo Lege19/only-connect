@@ -1,5 +1,4 @@
 import * as Quiz from "@/quizJson";
-import { unpack } from "@/flatArchive";
 
 export function parseCard(json: any, location: string = "unknown"): undefined|Quiz.Card {
     const typeMap = {"text": 0, "img": 1, "audio": 2};
@@ -153,44 +152,8 @@ export function parseJson(json: any): undefined|Quiz.QuizJson {
 
 
 
-export async function parse(archive: File|Blob): Promise<{json: Quiz.QuizJson, files: {[index:string]:string}}|undefined> {
-    const filesList = await unpack(archive);
-    if (!filesList) {
-        console.error("failed to unpack archive");
-        return;
-    }
-    const archiveObj = filesList.reduce((acc, cur) => {
-        acc[cur.name] = cur;
-        return acc;
-    }, {} as any);
-    if (!archiveObj["quiz.json"]) {
-        console.error("the selected .ocq did not contain a quiz.json file");
-        return;
-    }
-    const json = parseJson(JSON.parse(await archiveObj["quiz.json"].text()));
+export async function parse(quiz: File|Blob): Promise<Quiz.QuizJson|undefined> {
+    const json = parseJson(JSON.parse(await quiz.text()));
     if (!json) return;
-
-    const fileNames = Object.keys(archiveObj);
-    
-    let files: {[index: string]: string} = {};
-    let promises = [];
-    for (let i = 0; i < fileNames.length; i++) {
-        if (fileNames[i] == "quiz.json") {
-            continue;
-        }
-        promises.push(new Promise((resolve, reject) => {
-            let j = i;
-            let reader = new FileReader();
-            reader.onloadend = () => {
-                files[fileNames[j]] = reader.result as string;
-                resolve("");
-            };
-            reader.readAsDataURL(archiveObj[fileNames[j]]);
-        }));
-    }
-    await Promise.all(promises);
-    return {
-        json: json,
-        files: files
-    }
+    return json;
 }

@@ -5,9 +5,6 @@ import { RouterLink } from "vue-router"
 <template>
     <div>
         <span>
-            <RouterLink to="/host"><p>Host</p></RouterLink>
-        </span>
-        <span>
             <RouterLink to="/play"><p>Play</p></RouterLink>
         </span>
         <span>
@@ -20,7 +17,7 @@ import { RouterLink } from "vue-router"
 div {
     display: grid;
     grid-template-rows: 1fr;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr 1fr;
     background-color: var(--ui-color);
 }
 span {
