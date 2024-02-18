@@ -1,15 +1,41 @@
 <script setup lang="ts">
 import useQuiz from "@/stores/quiz";
 const quiz = useQuiz();
+import useDb from '@/stores/db';
+const db = useDb();
 import GenericRound from "./editor/generic-round.vue";
 import InputBox from "./editor/input-box.vue";
 import { RoundType } from "@/quizJson";
+import { watch } from 'vue';
+import cloneDeep from 'lodash.clonedeep';
+import { nanoid } from 'nanoid';
+
 
 if (!quiz.loaded) {
     quiz.json = {
         name: "",
+        id: nanoid(),
         rounds: []
     };
+}
+
+// counter increases when quiz is changes to keep track of when to autosave
+let changes = 0;
+
+watch(quiz, (curr, prev) => {
+    changes++
+    if (changes > 100) {
+        changes = 0;
+        autosave();
+    }
+});
+function autosave() {
+    if (db.db) {
+        const transaction = db.db.transaction('quizes', 'readwrite');
+        const os = transaction.objectStore('quizes');
+        const query = os.put({name: quiz.json!.name, rounds: cloneDeep(quiz.json!.rounds), id: quiz.json!.id});
+        query.onerror = (e) => console.error(e);
+    }
 }
 </script>
 

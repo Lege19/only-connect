@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { ref, type Ref, computed } from "vue";
-import { type QuizJson } from "@/quizJson";
+import { type Quiz } from "@/quizJson";
 
 import { parse } from "@/quizParser";
 
@@ -8,7 +8,7 @@ import useQuizProgress from "./quizProgress";
 
 const useQuiz = defineStore("quiz", () => {
     const quizProgress = useQuizProgress();
-    const json: Ref<undefined|QuizJson> = ref(undefined);
+    const json: Ref<undefined|Quiz> = ref(undefined);
 
     const loaded = computed(() => {
         if (json.value) return true;

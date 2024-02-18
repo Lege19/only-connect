@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "file-saver": "^2.0.5",
+    "lodash.clonedeep": "^4.5.0",
+    "nanoid": "^5.0.5",
     "pinia": "^2.1.7",
     "tsc": "^2.0.4",
     "typescript": "^5.3.3",
@@ -21,6 +23,7 @@
   },
   "devDependencies": {
     "@tsconfig/node18": "^18.2.0",
+    "@types/lodash.clonedeep": "^4.5.9",
     "@types/node": "^20.11.19",
     "@vitejs/plugin-vue": "^5.0.4",
     "@vue/tsconfig": "^0.5.1",

@@ -35,7 +35,8 @@ export interface Round {
     questions: Question[]
 };
 
-export interface QuizJson {
+export interface Quiz {
     name: string,
+    id: string
     rounds: Round[]
 };

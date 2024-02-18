@@ -127,7 +127,7 @@ export function parseRound(json: any, location: string = "unknown"): undefined|Q
         questions: questions
     };
 }
-export function parseJson(json: any): undefined|Quiz.QuizJson {
+export function parseJson(json: any): undefined|Quiz.Quiz {
     if (!("name" in json && "rounds" in json)) {
         console.error("error parsing json: invalid root signature");
         return;
@@ -145,6 +145,7 @@ export function parseJson(json: any): undefined|Quiz.QuizJson {
     }
     let quiz = {
         name: json.name,
+        id: json.id,
         rounds: rounds
     }
     return quiz;
@@ -152,7 +153,7 @@ export function parseJson(json: any): undefined|Quiz.QuizJson {
 
 
 
-export async function parse(quiz: File|Blob): Promise<Quiz.QuizJson|undefined> {
+export async function parse(quiz: File|Blob): Promise<Quiz.Quiz|undefined> {
     const json = parseJson(JSON.parse(await quiz.text()));
     if (!json) return;
     return json;
