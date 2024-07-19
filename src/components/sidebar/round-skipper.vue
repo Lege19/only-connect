@@ -13,7 +13,8 @@ const quizProgress = useQuizProgress();
         </div>
     </div>
 </template>
-<style scoped>
+<style scoped lang="scss">
+@use '@/assets/styles/base';
 .skip-icon {
     height: 1.5em;
     transition: transform 0.2s ease;
@@ -31,7 +32,7 @@ const quizProgress = useQuizProgress();
     transition: background-color 0.2s;
 }
 #forward-container:hover, #back-container:hover {
-    background-color: var(--ui-accent-color);
+    background-color: base.$accent-color;
 }
 #skip-container {
     display: grid;

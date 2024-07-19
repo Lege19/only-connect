@@ -1,0 +1,9 @@
+.vowel-enter-active, .vowel-leave-active, .vowel-move {
+    transition: all 0.5s ease;
+}
+.vowel-leave-active {
+    position: absolute;
+}
+.vowel-enter-from, .vowel-leave-to {
+    opacity: 0;
+}

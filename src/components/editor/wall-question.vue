@@ -18,14 +18,16 @@ defineProps<{
     </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+@use '@/assets/styles/base';
 .inner {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1em;
-    border: 4px var(--ui-color) solid;
+    border: 4px base.$ui-background-color solid;
     border-radius: 10px;
 }
+
 .outer {
     display: grid;
     grid-template-columns: 1fr max-content;

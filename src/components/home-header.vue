@@ -13,23 +13,22 @@ import { RouterLink } from "vue-router"
     </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+@use '@/assets/styles/base';
 div {
     display: grid;
     grid-template-rows: 1fr;
     grid-template-columns: 1fr 1fr;
-    background-color: var(--ui-color);
 }
 span {
-    background-color: var(--ui-color);
+    background-color: base.$ui-background-color;
     transition: background-color 0.2s;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    
 }
 span:hover {
-    background-color: var(--ui-accent-color);
+    background-color: base.$accent-color;
 }
 p {
     text-align: center;

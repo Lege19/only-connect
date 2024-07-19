@@ -1,0 +1,22 @@
+$background-color: #1e1e26;
+$text-color: white;
+$card-color: dodgerblue;
+$used-card-color: #78bbff;
+$ui-background-color: #101018;
+$accent-color: #1f1f3d;
+
+p, a, h1, h2, th, td, ol {
+    color: $text-color;
+}
+
+p, a, h2, th, td {
+    margin: 0;
+    text-decoration: none;
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}

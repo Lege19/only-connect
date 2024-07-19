@@ -21,28 +21,11 @@ function clicked() {
 
 <template>
     <div 
-     class="card" 
-     :class="{usedCard: props.used}" 
+     class="question-card card" 
+     :class="{'used-card': props.used}" 
      @click="clicked"
      ref="cardRef"
     >
         <h2 style="font-size: 2cm">{{ title }}</h2>
     </div>
 </template>
-
-<style scoped>
-.card {
-    background-color: var(--card-color);
-    width: 20vw;
-    aspect-ratio: 16/9;
-    border-radius: 9%/16%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: relative;
-    flex-basis: 25%;
-}
-.usedCard {
-    background-color: var(--used-card-color)
-}
-</style>

@@ -18,14 +18,15 @@ function onclick(event: Event) {
     </div>
 </template>
 
-<style>
+<style lang="scss">
+@use '@/assets/styles/base';
 .menu-item {
     padding: 1em;
     transition: background-color 0.2s;
-    background-color: var(--ui-color);
+    background-color: base.$ui-background-color;
 }
 .menu-item:hover {
-    background-color: var(--ui-accent-color);
+    background-color: base.$accent-color
 }
 .menu-item-text {
     margin: 0;

@@ -9,7 +9,8 @@ const emits = defineEmits(["change"])
     </label>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+@use '@/assets/styles/base';
 
 label {
     display: block;
@@ -24,7 +25,7 @@ input {
 }
 
 #hamburgerButton, #hamburgerButton::before, #hamburgerButton::after {
-    background-color: var(--ui-text-color);
+    background-color: base.$text-color;
     position: absolute;
     width: 100%;
     transition: all 0.25s ease-in-out;

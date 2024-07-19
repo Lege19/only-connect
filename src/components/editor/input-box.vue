@@ -22,9 +22,10 @@ defineProps<{
     </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+@use '@/assets/styles/base';
 .container {
-    background-color: var(--ui-color);
+    background-color: base.$ui-background-color;
     padding: 5px;
     margin: 5px;
     border-radius: 10px;
@@ -39,13 +40,11 @@ textarea {
     resize: none;
     color: white;
     font-size: 1em;
-    font-family: arial;
     padding: 0;
     margin: 0;
 }
 .icons {
     display: flex;
     align-content: center;
-    
 }
 </style>

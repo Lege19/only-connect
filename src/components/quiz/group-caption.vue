@@ -8,9 +8,10 @@
     </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+@use '@/assets/styles/base';
 .item {
-    background-color: var(--card-color);
+    background-color: base.$card-color;
     border-top-left-radius: 2vh;
     border-top-right-radius: 2vh;
     width: 80%;

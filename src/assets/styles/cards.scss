@@ -1,0 +1,42 @@
+@use 'base';
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Egyptian+Hieroglyphs&display=swap');
+
+.card-group {
+    display: flex;
+    gap: 2.6666666%;
+    width: 100%;
+}
+
+.card-in-group {
+    flex-basis: 23%;
+}
+
+.card-enter-from, .card-leave-to {
+    transform: matrix(0.3, -0.2, 0, 0.8, -100, -50);
+    opacity: 0;
+}
+
+.card-enter-active, .card-leave-active {
+    transition: all 0.5s ease;
+}
+
+.card {
+    background-color: base.$card-color;
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 2vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.question-card {
+    width: 20vw;
+    border-radius: 9%/16%;
+    flex-basis: 25%;
+    font-family: "Noto Sans Egyptian Hieroglyphs";
+}
+
+.used-card {
+    background-color: base.$used-card-color;
+}

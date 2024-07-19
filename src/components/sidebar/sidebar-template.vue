@@ -45,7 +45,8 @@ function close() {
     </div> 
 </template>
 
-<style>
+<style lang="scss">
+@use '@/assets/styles/base';
 .sidebar-outer {
     height: 100vh;
     overflow: hidden;
@@ -54,7 +55,7 @@ function close() {
     width: 0;
 }
 .sidebar-inner {
-    background-color: var(--ui-color);
+    background-color: base.$ui-background-color;
     height: calc(100vh - 3.5em);
     padding-top: 3.5em;
     position: absolute;
