@@ -13,6 +13,8 @@ const useDb = defineStore('db', () => {
         const table = db.value.createObjectStore('quizes', {keyPath: 'id'});
         table.createIndex('name', 'name', {unique: false});
         table.createIndex('rounds', 'rounds', {unique: false});
+        table.createIndex('created', 'created', {unique: false});
+        table.createIndex('edited', 'edited', {unique: false});
         loaded.value = true;
     };
     return {db, loaded}

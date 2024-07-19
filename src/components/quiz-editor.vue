@@ -7,7 +7,7 @@ import GenericRound from "./editor/generic-round.vue";
 import InputBox from "./editor/input-box.vue";
 import { RoundType } from "@/quizJson";
 import { watch } from 'vue';
-import cloneDeep from 'lodash.clonedeep';
+import { saveQuiz } from '@/saveManager';
 import { nanoid } from 'nanoid';
 
 
@@ -15,6 +15,8 @@ if (!quiz.loaded) {
     quiz.json = {
         name: "",
         id: nanoid(),
+        created: new Date(),
+        edited: new Date(),
         rounds: []
     };
 }
@@ -24,17 +26,15 @@ let changes = 0;
 
 watch(quiz, (curr, prev) => {
     changes++
-    if (changes > 100) {
+    if (changes > 10) {
         changes = 0;
         autosave();
     }
 });
 function autosave() {
-    if (db.db) {
-        const transaction = db.db.transaction('quizes', 'readwrite');
-        const os = transaction.objectStore('quizes');
-        const query = os.put({name: quiz.json!.name, rounds: cloneDeep(quiz.json!.rounds), id: quiz.json!.id});
-        query.onerror = (e) => console.error(e);
+    if (db.db && quiz.json) {
+        quiz.json.edited = new Date();
+        saveQuiz(quiz.json, db.db);
     }
 }
 </script>

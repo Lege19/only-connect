@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import HamburgerButton from './hamburger-button.vue';
+import SaveManager from '@/components/save-manager.vue';
 import { router } from "@/router/index";
 
 import { ref, type Ref } from "vue";
@@ -26,6 +27,9 @@ function close() {
 <template>
     <div ref="clickScope">
         <div :class="{'sidebar-open': showSidebar}" class="sidebar-outer">
+            <Suspense>
+                <SaveManager></SaveManager>
+            </Suspense>
             <div class="sidebar-inner">
                 <img src="@/assets/images/home.svg" class="home" @click="router.push('/')">
                 <div>

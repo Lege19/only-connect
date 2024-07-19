@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import SidebarTemplate from "./sidebar/sidebar-template.vue";
 import RestartQuiz from "./sidebar/reset-quiz.vue";
-import OpenQuiz from "./sidebar/open-quiz.vue";
+import UploadQuiz from "./sidebar/upload-quiz.vue";
 import RoundSkipper from "./sidebar/round-skipper.vue";
 </script>
 
@@ -9,7 +9,7 @@ import RoundSkipper from "./sidebar/round-skipper.vue";
     <SidebarTemplate>
         <template #alignTop="props">
             <RestartQuiz :close="props.close"></RestartQuiz>
-            <OpenQuiz :close="props.close"></OpenQuiz>
+            <UploadQuiz :close="props.close"></UploadQuiz>
         </template>
         <template #alignBottom="props">
             <RoundSkipper></RoundSkipper>

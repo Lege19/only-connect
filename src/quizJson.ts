@@ -37,6 +37,8 @@ export interface Round {
 
 export interface Quiz {
     name: string,
-    id: string
+    id: string,
+    created: Date,
+    edited: Date,
     rounds: Round[]
 };
