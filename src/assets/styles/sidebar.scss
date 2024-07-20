@@ -1,0 +1,55 @@
+@use 'base';
+
+.item {
+    padding: 1em;
+    transition: background-color 0.2s;
+    background-color: base.$ui-background-color;
+    &:hover {
+        background-color: base.$accent-color
+    }
+    .text {
+        margin: 0;
+        text-align: left;
+    }
+    .icon {
+        height: 1em;
+        transition: transform 0.2s;
+        float: right;
+    }
+    .icon:hover {
+        transform: scale(1.2);
+    }
+}
+
+
+.sidebar {
+    height: 100vh;
+    overflow: hidden;
+    position: fixed;
+    transition: width 0.25s;
+    width: 0;
+    &.open {
+        width: 20vw;
+    }
+    .inner {
+        background-color: base.$ui-background-color;
+        height: calc(100vh - 3.5em);
+        padding-top: 3.5em;
+        position: absolute;
+        width: 20vw;
+        display: grid;
+        grid-template-rows: min-content 1fr min-content;
+        z-index: -10;
+        .home {
+            position: absolute;
+            right: 0;
+            width: 1.5em;
+            height: 1.5em;
+            margin: 1em;
+            transition: transform 0.2s;
+            &:hover {
+                transform: scale(1.2);
+            }
+        }
+    }
+}

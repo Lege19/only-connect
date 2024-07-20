@@ -8,36 +8,12 @@ function onclick(event: Event) {
 </script>
 
 <template>
-    <div class="menu-item" @click="onclick($event)">
-        <p class="menu-item-text">
+    <div class="item" @click="onclick($event)">
+        <p class="text">
             <slot></slot>
-            <div class="menu-icon">
+            <div class="icon">
                 <slot name="icon"></slot>
             </div>
         </p>
     </div>
 </template>
-
-<style lang="scss">
-@use '@/assets/styles/base';
-.menu-item {
-    padding: 1em;
-    transition: background-color 0.2s;
-    background-color: base.$ui-background-color;
-}
-.menu-item:hover {
-    background-color: base.$accent-color
-}
-.menu-item-text {
-    margin: 0;
-    text-align: left;
-}
-.menu-icon {
-    height: 1em;
-    transition: transform 0.2s;
-    float: right;
-}
-.menu-icon:hover {
-    transform: scale(1.2);
-}
-</style>
