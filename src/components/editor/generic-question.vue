@@ -3,7 +3,7 @@ import EditorGroup from "./editor-group.vue";
 import WallQuestion from "./wall-question.vue";
 import VowelQuestion from "./vowel-question.vue";
 import { type Ref, computed } from "vue";
-import { type Question, RoundType } from "@/quizJson";
+import { type Question, RoundType } from "@/quizTypes";
 const model: Ref<Question|undefined> = defineModel();
 const props = defineProps<{
     roundType: RoundType,

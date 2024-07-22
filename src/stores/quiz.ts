@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { ref, type Ref, computed } from "vue";
-import { type Quiz } from "@/quizJson";
+import { type Quiz } from "@/quizTypes";
 
 import { parse } from "@/quizParser";
 

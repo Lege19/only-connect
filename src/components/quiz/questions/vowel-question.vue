@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { VowelQuestion } from "@/quizJson";
+import type { VowelQuestion } from "@/quizTypes";
 import useQuizProgress from "@/stores/quizProgress";
 const quizProgress = useQuizProgress();
 import { watch, computed } from "vue";

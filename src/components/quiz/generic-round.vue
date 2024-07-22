@@ -9,7 +9,7 @@ import WallQuestion from "./questions/wall-question.vue";
 
 import { computed, } from "vue";
 
-import { RoundType } from "@/quizJson";
+import { RoundType } from "@/quizTypes";
 
 import useQuiz from "@/stores/quiz";
 const quiz = useQuiz();

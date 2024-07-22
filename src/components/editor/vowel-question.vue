@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import DeleteItem from "./delete-item.vue";
 import NewItem from "./new-item.vue";
-import { type VowelQuestion } from "@/quizJson";
+import { type VowelQuestion } from "@/quizTypes";
 import { type Ref } from "vue";
 import InputBox from "./input-box.vue";
 const model: Ref<VowelQuestion|undefined> = defineModel();

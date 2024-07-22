@@ -1,4 +1,4 @@
-import type { Quiz } from '@/quizJson';
+import type { Quiz } from '@/quizTypes';
 import cloneDeep from 'lodash.clonedeep';
 function saveQuiz(quiz: Quiz, db: IDBDatabase) {
     console.log("save")

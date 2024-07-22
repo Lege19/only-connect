@@ -4,8 +4,9 @@ import GenericQuestion from "./generic-question.vue";
 import DeleteItem from "./delete-item.vue";
 import NewItem from "./new-item.vue";
 import MoveItem from "./move-item.vue";
-import { type Ref, triggerRef } from "vue";
-import { RoundType, type Round, CardType, type Card, type Group } from "@/quizJson";
+import { type Ref } from "vue";
+import { RoundType, type Round, CardType, type Group, type WallQuestion } from "@/quizTypes";
+
 const model: Ref<Round|undefined> = defineModel();
 const moveModel: Ref<Round[]|undefined> = defineModel("move");
 defineProps<{
@@ -30,7 +31,7 @@ function addQuestion() {
             model.value.questions.push(blankGroup());
             break;
         case RoundType.Wall:
-            model.value.questions.push(Array.from({length: 4}, blankGroup) as [Group, Group, Group, Group]);
+            model.value.questions.push(Array.from({length: 4}, blankGroup) as WallQuestion);
             break;
         case RoundType.Vowel:
             model.value.questions.push({...{

@@ -8,11 +8,11 @@ const quiz = useQuiz();
 import GenericCard from "@/components/quiz/generic-card.vue";
 import GroupCation from "@/components/quiz/group-caption.vue";
 import { computed, onMounted, ref , watch} from "vue";
-import { type Group } from "@/quizJson";
+import { type Group, type WallQuestion } from "@/quizTypes";
 
 const container = ref(null);
 const cardIndicies = ref(quizProgress.wallProgress?.cardOrder??[]);
-const wallQuestion = computed(() => quizProgress.questionObj! as [Group, Group, Group, Group])
+const wallQuestion = computed(() => quizProgress.questionObj! as WallQuestion)
 const cards = computed(() => {
     return wallQuestion.value.map(group => group.cards).flat();
 });

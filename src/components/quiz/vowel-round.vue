@@ -3,7 +3,7 @@ import useQuizProgress from "@/stores/quizProgress";
 const quizProgress = useQuizProgress();
 
 import VowelQuestionComponent from "./questions/vowel-question.vue";
-import type { VowelQuestion } from "@/quizJson";
+import type { VowelQuestion } from "@/quizTypes";
 </script>
 
 <template>

@@ -2,7 +2,7 @@
 import EditorGroup from "./editor-group.vue";
 import DeleteItem from "./delete-item.vue";
 import { type Ref } from "vue";
-import { type Group } from "@/quizJson";
+import { type Group } from "@/quizTypes";
 const model: Ref<Group[]|undefined> = defineModel();
 defineProps<{
     del: () => void

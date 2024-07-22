@@ -3,9 +3,9 @@ import useQuiz from "@/stores/quiz";
 const quiz = useQuiz();
 import useDb from '@/stores/db';
 const db = useDb();
-import GenericRound from "./editor/generic-round.vue";
+import GenericRound from "./editor/editor-round.vue";
 import InputBox from "./editor/input-box.vue";
-import { RoundType } from "@/quizJson";
+import { RoundType } from "@/quizTypes";
 import { watch } from 'vue';
 import { saveQuiz } from '@/saveManager';
 import { nanoid } from 'nanoid';
@@ -31,10 +31,10 @@ watch(quiz, (curr, prev) => {
         autosave();
     }
 });
-function autosave() {
+async function autosave() {
     if (db.db && quiz.json) {
         quiz.json.edited = new Date();
-        saveQuiz(quiz.json, db.db);
+        saveQuiz(quiz.json, await db.db);
     }
 }
 </script>
@@ -93,4 +93,4 @@ function autosave() {
     flex-direction: column;
     text-align: center;
 }
-</style>
+</style>./editor/editor-round.vue

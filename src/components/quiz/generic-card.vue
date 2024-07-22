@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import TextCard from "./cards/text-card.vue";
 import ImgCard from "./cards/img-card.vue";
-import { type Card, CardType, GroupColor } from "@/quizJson";
+import { type Card, CardType, GroupColor } from "@/quizTypes";
 
 import { computed } from "vue";
 

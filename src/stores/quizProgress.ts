@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { ref, type Ref, computed, type ComputedRef} from "vue";
 import useQuiz from "./quiz";
 
-import { type Round, type Question, RoundType } from "../quizJson";
+import { type Round, type Question, RoundType } from "../quizTypes";
 
 export interface WallProgress {
     selectedCards: number[],

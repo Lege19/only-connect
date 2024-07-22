@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type Group } from "@/quizJson";
+import { type Group } from "@/quizTypes";
 import { type Ref } from "vue";
 import InputBox from "./input-box.vue";
 import DeleteItem from "./delete-item.vue";
