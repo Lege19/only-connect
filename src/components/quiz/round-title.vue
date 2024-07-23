@@ -1,16 +1,6 @@
-<script setup lang="ts">
-import useQuiz from "@/stores/quiz";
-const quiz = useQuiz();
-import useQuizProgress from "@/stores/quizProgress";
-const quizProgress = useQuizProgress();
-const props = defineProps<{
-    text?: string
-}>()
-</script>
-
-<template v-if="quizProgress.playing">
-    <div @click="quizProgress.startRound">
-        <h1>{{ props.text ?? quiz.json?.rounds[quizProgress.round!].name }}</h1>
+<template>
+    <div>
+        <h1><slot></slot></h1>
     </div>
 </template>
 

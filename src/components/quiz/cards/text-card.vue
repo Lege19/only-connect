@@ -1,12 +1,12 @@
 <script setup lang="ts">
-const props = defineProps({
+defineProps({
     data: String
 });
 </script>
 
 <template>
     <div class="card">
-        <p class="card-text">{{ props.data }}</p>
+        <p class="card-text">{{ data }}</p>
     </div>
 </template>
 

@@ -1,103 +1,156 @@
 <script setup lang="ts">
-import useQuizProgress from "@/stores/quizProgress";
-const quizProgress = useQuizProgress();
-
-import useQuiz from "@/stores/quiz";
-const quiz = useQuiz();
-
 import GenericCard from "@/components/quiz/generic-card.vue";
 import GroupCation from "@/components/quiz/group-caption.vue";
-import { computed, onMounted, ref , watch} from "vue";
-import { type Group, type WallQuestion } from "@/quizTypes";
+import { computed, ref, type Ref} from "vue";
+import { type Card, type Group, type WallQuestion } from "@/quizTypes";
 
-const container = ref(null);
-const cardIndicies = ref(quizProgress.wallProgress?.cardOrder??[]);
-const wallQuestion = computed(() => quizProgress.questionObj! as WallQuestion)
-const cards = computed(() => {
-    return wallQuestion.value.map(group => group.cards).flat();
+const props = defineProps<{
+    question: WallQuestion
+}>();
+const emit = defineEmits<{
+    (e: "questionFinished"): void
+    (e: "questionCanceled"): void
+}>();
+
+type WallCard = {
+    card: Card,
+    group: number
+};
+
+type WallState = {
+    selectedCards: number[],
+    groupsFound: number[],
+    cardOrder: number[],
+};
+enum WallPhase {
+    FindingGroups,
+    BonusPoints,// all groups found but before captions are revealed
+    Captions
+}
+type WallQuestionProgress = {phase: WallPhase.FindingGroups | WallPhase.BonusPoints} |
+    {phase: WallPhase.Captions, captionIdx: number};
+const progress: Ref<WallQuestionProgress> = ref({phase: WallPhase.FindingGroups});
+const wallState: Ref<WallState> = ref({
+    selectedCards: [], 
+    groupsFound: [], 
+    cardOrder: Array.from(Array(16).keys())
+        .map(value => ({ value, sort: Math.random() }))
+        .sort((a, b) => a.sort - b.sort)
+        .map(({ value }) => value)
 });
-const caption = computed(() => {
-    if (quizProgress.questionProgress! < 2 ) { 
-        return undefined;
-    }
-    return wallQuestion.value[quizProgress.wallProgress!.groupsFound[quizProgress.questionProgress! - 2]].name;
-});
+
+const cards: WallCard[] = Array.from(props.question.entries())
+    .map(
+        ([index, group]: [number, Group]) => group.cards.map(
+            card => ({card, group: index})
+        )
+    ).flat();
 const cardColours = computed(() => {
     let colours = Array(16);
-    for (let i = 0; i < quizProgress.wallProgress!.groupsFound.length; i++) {
+    for (let i = 0; i < wallState.value.groupsFound.length; i++) {
         for (let j = 0; j < 4; j++) {
-            colours[quizProgress.wallProgress!.groupsFound[i]*4+j] = i;
+            colours[wallState.value.groupsFound[i]*4+j] = i;
         }
     }
-    for (let i = 0; i < quizProgress.wallProgress!.selectedCards.length; i++) {
-        colours[quizProgress.wallProgress!.selectedCards[i]] = quizProgress.wallProgress!.groupsFound.length
+    const nextGroupColor = wallState.value.groupsFound.length
+    for (const card of wallState.value.selectedCards) {
+        colours[card] = nextGroupColor;
     }
     return colours;
 });
-const cardHighlight = computed(() => {
-    let highlights = Array(16);
-    if (quizProgress.questionProgress! >= 2) {
-        for (let i = 0; i < 4; i++) {
-            highlights[quizProgress.wallProgress!.groupsFound[quizProgress.questionProgress! - 2] * 4 + i] = true;
-        }
-    }
-    return highlights;
-});
 
 function cardClicked(index: number) {
-    if (quizProgress.wallProgress!.groupsFound.includes(Math.floor(index/4))) return;
+    if (wallState.value.groupsFound.includes(Math.floor(index/4))) return;
 
-    const indexOfIndex = quizProgress.wallProgress!.selectedCards.indexOf(index);
+    const indexOfIndex = wallState.value.selectedCards.indexOf(index);
     if (indexOfIndex != -1) {
-        quizProgress.wallProgress!.selectedCards.splice(indexOfIndex, 1);
+        wallState.value.selectedCards.splice(indexOfIndex, 1);
         return;
     }
-    quizProgress.wallProgress!.selectedCards.push(index);
-    if (quizProgress.wallProgress!.selectedCards.length == 4) {
+    wallState.value.selectedCards.push(index);
+    if (wallState.value.selectedCards.length == 4) {
         checkGroup()
-        quizProgress.wallProgress!.selectedCards = [];
+        wallState.value.selectedCards = [];
     }
 }
 function checkGroup() {
-    if (quizProgress.wallProgress!.selectedCards.length !== 4) return;
-    let sortedCards = quizProgress.wallProgress!.selectedCards.sort((a, b) => a - b);
-    if (sortedCards[0] % 4 !== 0) return;
-    for (let i = 0 ; i < 3; i++) {
-        if (sortedCards[i+1] - sortedCards[i] !== 1) return;
-    }
+    if (wallState.value.selectedCards.length !== 4) return;
+    const cardGroups = wallState.value.selectedCards.map(idx => cards[idx].group);
+    if (!cardGroups.every(groupIdx => groupIdx !== cardGroups[0])) return;
     //if code reaches here then the selected cards DID form a group
-    for (const card of sortedCards) {
-        quizProgress.wallProgress!.cardOrder.splice(quizProgress.wallProgress!.cardOrder.indexOf(card), 1);
+    for (const card of wallState.value.selectedCards) {
+        wallState.value.cardOrder.splice(wallState.value.cardOrder.indexOf(card), 1);
+        wallState.value.cardOrder.splice(wallState.value.groupsFound.length * 4, 0, card)
     }
-    quizProgress.wallProgress!.cardOrder.splice(quizProgress.wallProgress!.groupsFound.length * 4, 0, ...sortedCards);
-    quizProgress.wallProgress!.groupsFound.push(sortedCards[0]/4);
+    wallState.value.groupsFound.push(cardGroups[0]);
 
-    if (quizProgress.wallProgress!.groupsFound.length !== 3) return;
+    if (wallState.value.groupsFound.length !== 3) return;
     
-    let groupsNotFound = [0, 1, 2, 3];
-    for (const group of quizProgress.wallProgress!.groupsFound) {
-        groupsNotFound.splice(groupsNotFound.indexOf(group), 1);
-    }
-    quizProgress.wallProgress!.groupsFound.push(groupsNotFound[0]);
-    quizProgress.wallProgress!.foundAllGroups = true;
+    const sumOfAllGroups = 6;// 0 + 1 + 2 + 3
+    const groupsFoundSum = wallState.value.groupsFound.reduce((partialSum, a) => a + partialSum, 0);
+    const missingGroup = sumOfAllGroups - groupsFoundSum;
+    wallState.value.groupsFound.push(missingGroup);
+    progress.value.phase = WallPhase.BonusPoints;
 }
-watch(() => quizProgress.questionProgress, (current, prev) => {
-    if (current! >= 6) {
-        quizProgress.completeQuestion();
+
+function forward() {
+    if (progress.value.phase === WallPhase.BonusPoints) {
+        progress.value = {phase: WallPhase.Captions, captionIdx: 0};
+    } else if (progress.value.phase !== WallPhase.Captions) return;
+    else if (progress.value.captionIdx < 3) {
+        progress.value.captionIdx++;
+    } else {
+        emit("questionFinished");
     }
-});
+}
+function back() {
+    if (progress.value.phase === WallPhase.Captions) {
+        if (progress.value.captionIdx === 0) {
+            progress.value = {phase: WallPhase.BonusPoints};
+        } else {
+            progress.value.captionIdx--;
+        }
+    } else if (progress.value.phase === WallPhase.BonusPoints) {
+        progress.value.phase = WallPhase.FindingGroups;
+        wallState.value.groupsFound.pop();
+    } else if (wallState.value.groupsFound.length === 0) {
+        emit("questionCanceled");
+    } else {
+        wallState.value.groupsFound.pop();
+    }
+}
 </script>
 
 <template>
-    <div class="question-container" @click="if (quizProgress.wallProgress?.foundAllGroups) quizProgress.forward();">
-        <TransitionGroup tag="div" :class="quizProgress.questionProgress! < 2 ? 'wall-container' : 'wall-container wall-container-end'" name="wall" ref="container">
-            <GenericCard v-for="cardIndex in cardIndicies" :key="cardIndex" 
-                :card="cards[cardIndex]" @click="cardClicked(cardIndex)"
-                :group="cardColours[cardIndex]" class="wall-card" :highlight="cardHighlight[cardIndex]">
+    <div
+        class="question-container" 
+        @click="forward" 
+        @keydown.arrow-right="forward" 
+        @keydown.space="forward"
+        @keydown.arrow-left="back"
+    >
+        <TransitionGroup
+            tag="div" 
+            class="wall-container" 
+            :class="{'wall-container-end': progress.phase === WallPhase.Captions}" 
+            name="wall" 
+        >
+            <GenericCard 
+                v-for="cardIndex in wallState.cardOrder" 
+                :key="cardIndex" 
+                :card="cards[cardIndex].card" 
+                @click="cardClicked(cardIndex)"
+                :group="cardColours[cardIndex]" 
+                class="wall-card" 
+                :highlight="progress.phase === WallPhase.Captions && 
+                    cards[cardIndex].group === wallState.groupsFound[progress.captionIdx]"
+            >
             </GenericCard>
         </TransitionGroup>
         <Transition mode="out-in" name="caption">
-            <GroupCation v-if="caption" :key="quizProgress.questionProgress">{{ caption }}</GroupCation>
+                <GroupCation v-if="progress.phase === WallPhase.Captions" :key="progress.captionIdx">
+                    {{ question[wallState.groupsFound[progress.captionIdx]].name }}
+                </GroupCation>
         </Transition>
     </div>
 </template>

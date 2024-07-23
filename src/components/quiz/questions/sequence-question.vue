@@ -1,33 +1,55 @@
 <script setup lang="ts">
 import { type Group } from "@/quizTypes";
 
-import useQuizProgress from "@/stores/quizProgress";
-const quizProgress = useQuizProgress();
-
 import GenericCard from "../generic-card.vue";
 import GroupCation from "../group-caption.vue";
 
-import { computed, watch } from "vue";
+import { ref, type Ref, watch } from "vue";
 
-const cards = computed(() => {
-    return (quizProgress.questionObj as Group).cards.slice(0, Math.min(quizProgress.questionProgress! + 1, 4));
-});
-
-
-watch(() => quizProgress.questionProgress, (current, prev) => {
-    if (current! >= 4) {
-        quizProgress.completeQuestion();
+defineProps<{
+    question: Group
+}>();
+const emit = defineEmits<{
+    (e: 'questionFinished'): void,
+    (e: "questionCanceled"): void,
+}>()
+const cardsShown: Ref<number> = ref(0);
+const showCaption: Ref<boolean> = ref(false);
+function forward() {
+    if (cardsShown.value < 3) {
+        cardsShown.value++;
+    } else if (cardsShown.value === 3) {
+        cardsShown.value = 4;
+        showCaption.value = true;
+    } else {
+        emit('questionFinished');
     }
-});
+}
+function back() {
+    if (showCaption.value) {
+        showCaption.value = false;
+        cardsShown.value = 3;
+    } else if (cardsShown.value === 0) {
+        emit("questionCanceled");
+    } else {
+        cardsShown.value--;
+    }
+}
 </script>
 
 <template>
-    <div class="question-container" @click="quizProgress.forward">
+    <div
+        class="question-container" 
+        @click="forward" 
+        @keydown.arrow-right="forward" 
+        @keydown.space="forward" 
+        @keydown.arrow-left="back"
+    >
         <TransitionGroup tag="div" class="card-group" name="card">
-            <GenericCard v-for="[index, card] in cards.entries()" class="card-in-group" :key="index" :card="card"></GenericCard>
+            <GenericCard v-for="[index, card] in question.cards.slice(0, cardsShown).entries()" class="card-in-group" :key="index" :card="card"></GenericCard>
         </TransitionGroup>
         <Transition name="caption">
-            <GroupCation v-if="quizProgress.questionProgress == 3">{{ (quizProgress.questionObj! as Group).name }}</GroupCation>
+            <GroupCation v-if="showCaption">{{ question.name }}</GroupCation>
         </Transition>
     </div>
 </template>

@@ -1,18 +1,6 @@
-<script setup lang="ts">
-import useQuiz from "@/stores/quiz";
-const quiz = useQuiz();
-import useQuizProgress from "@/stores/quizProgress";
-const quizProgress = useQuizProgress();
-
-function clicked() {
-    if (quizProgress.completed) return;
-    quizProgress.start();
-}
-</script>
-
 <template>
-    <div @click="clicked">
-        <h1>{{ quiz.json?.name }}</h1>
+    <div>
+        <h1><slot></slot></h1>
     </div>
 </template>
 

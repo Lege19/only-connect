@@ -26,8 +26,6 @@ function getCardType() {
             return TextCard;
         case CardType.Image:
             return ImgCard;
-        default:
-            return TextCard;
     }
 }
 </script>

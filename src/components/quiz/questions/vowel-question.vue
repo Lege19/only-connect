@@ -1,44 +1,91 @@
 <script setup lang="ts">
 import type { VowelQuestion } from "@/quizTypes";
-import useQuizProgress from "@/stores/quizProgress";
-const quizProgress = useQuizProgress();
-import { watch, computed } from "vue";
-const blacklist = ["A", "E", "I", "O", "U", " "];
-const props = defineProps<{data: VowelQuestion}>();
+import { ref, type Ref, computed, type ComputedRef } from "vue";
+const vowels = ["A", "E", "I", "O", "U", " "];
 
-const withVowels = computed(() => {
-    if (quizProgress.questionProgress === 0) return undefined;
-    return Array.from(Array.from(props.data.phrases[Math.floor((quizProgress.questionProgress!-1)/2)].toUpperCase()).entries())
-})
-console.log(props.data);
-const withoutVowels = computed(() => {
-    if (!withVowels.value) return;
-    let out = withVowels.value.filter(x => !blacklist.includes(x[1]));
-    out.splice(Math.floor(Math.random() * (out.length-6)) + 1, 0, [-1, " "]);
-    return out;
-});
-watch(() => quizProgress.questionProgress, (curr, prev) => {
-    if (curr === props.data.phrases.length * 2 + 1) {
-        if (quizProgress.roundObj!.questions.length-1 === quizProgress.question) {
-            quizProgress.nextRound();
-            return;
-        }
-        quizProgress.question!++;
-        quizProgress.questionProgress = 0;
+const props = defineProps<{
+    question: VowelQuestion
+}>();
+const emit = defineEmits<{
+    (e: 'nextQuestion'): void,
+    (e: 'prevQuestion'): void
+}>();
+
+type Letter = {
+    char: string,
+    key: number
+};
+type VowelQuestionProgress = 
+    {started: false} | 
+    {started: true, phraseIdx: number, showVowels: boolean, withVowels: Letter[], withoutVowels: Letter[]};
+const progress: Ref<VowelQuestionProgress> = ref({started: false});
+
+function addRandomSpace(text: Letter[]): Letter[] {
+    const thirdOfLength = text.length/3;
+    const position = Math.floor(thirdOfLength + Math.random() * thirdOfLength);
+    return text.splice(position, 0, {char: " ", key: -1});
+}
+
+function getStrings(phraseIdx: number): {withVowels: Letter[], withoutVowels: Letter[]}{
+    const srcText = Array.from(props.question.phrases[phraseIdx].toUpperCase())
+    const withVowels = Array.from(srcText.entries()).map(([key, char]: [number, string]) => ({char: char, key: key}))
+    const withoutVowels = addRandomSpace(withVowels.filter((x: Letter) => !vowels.includes(x.char)));
+    return {withVowels, withoutVowels};
+}
+function forward() {
+    if (!progress.value.started) {
+        progress.value = {
+            started: true,
+            phraseIdx: 0,
+            showVowels: false,
+            ...getStrings(0)
+        };
+    } else if (!progress.value.showVowels) {
+        progress.value.showVowels = true;
+    } else if (progress.value.phraseIdx + 1 < props.question.phrases.length) {
+        progress.value.phraseIdx ++;
+        progress.value.showVowels = false;
+
+        Object.assign(progress.value, getStrings(progress.value.phraseIdx));
+    } else {
+        emit("nextQuestion");
     }
-});
+}
+function back() {
+    if (!progress.value.started) {
+        emit("prevQuestion");
+    } else if (progress.value.showVowels) {
+        progress.value.showVowels = false;
+    } else if (progress.value.phraseIdx === 0) {
+        progress.value = {started: false};
+    } else {
+        progress.value.phraseIdx --;
+        progress.value.showVowels = true;
+        Object.assign(progress.value, getStrings(progress.value.phraseIdx));
+    }
+}
 </script>
 
 <template>
-    <div @click="quizProgress.forward" class="question-container">
+    <div 
+        @click="forward" 
+        @keydown.arrow-right="forward" 
+        @keydown.space="forward"
+        @keydown.arrow-left="back" 
+        class="question-container"
+    >
         <Transition name="fade" mode="out-in">
-            <TransitionGroup v-if="withVowels" :key="Math.floor((quizProgress.questionProgress!-1)/2)"
-            tag="div" name="vowel" @click="quizProgress.forward" class="vowel-container">
-                <template v-for="item in quizProgress.questionProgress!%2 === 1 ? withoutVowels : withVowels" :key="item[0]">
-                    <h1>{{ item[1] }}</h1>
-                </template>
-            </TransitionGroup>
-            <h1 v-else>{{ props.data.name }}</h1>
+            <div v-if="progress.started" class="vowel-container" :key="progress.phraseIdx">
+                <TransitionGroup tag="h1" name="vowel" style="white-space: pre">
+                    <template
+                        v-for="letter in (progress.showVowels ? progress.withoutVowels : progress.withVowels)"
+                        :key="letter.key"
+                    >
+                        <span>{{ letter.char }}</span>
+                    </template>
+                </TransitionGroup>
+            </div>
+            <h1 v-else>{{ question.name }}</h1>
         </Transition>
     </div>
 </template>
@@ -47,8 +94,5 @@ watch(() => quizProgress.questionProgress, (curr, prev) => {
 .vowel-container {
     display: flex;
     justify-content:center;
-}
-h1 {
-    white-space: pre;
 }
 </style>
