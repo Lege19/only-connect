@@ -14,9 +14,9 @@ defineEmits<{
 
 <template>
     <SidebarTemplate>
-        <template #alignTop="props">
-            <RestartQuiz :close="props.close"></RestartQuiz>
-            <UploadQuiz :close="props.close"></UploadQuiz>
+        <template #alignTop="{close}">
+            <RestartQuiz @click="close(), $emit('resetQuiz')"></RestartQuiz>
+            <UploadQuiz @close="close"></UploadQuiz>
         </template>
         <template #alignBottom="props">
             <RoundSkipper @next-round="$emit('nextRound')" @prev-round="$emit('prevRound')"></RoundSkipper>

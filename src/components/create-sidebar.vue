@@ -5,10 +5,10 @@ import UploadQuiz from "./sidebar/upload-quiz.vue";
 
 <template>
     <SidebarTemplate>
-        <template #alignTop="props">
-            <UploadQuiz></UploadQuiz>
+        <template #alignTop="{close}">
+            <UploadQuiz @close="close"></UploadQuiz>
         </template>
-        <template #alignBottom="props">
+        <template #alignBottom>
         </template>
     </SidebarTemplate>
 </template>

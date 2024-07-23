@@ -4,16 +4,16 @@ import SidebarItem from "./sidebar-item.vue";
 import useQuiz from "@/stores/quiz";
 const quiz = useQuiz();
 
-const props = defineProps<{
-    close?: Function
+const emit = defineEmits<{
+    (e: "close"): void
 }>();
 
 async function openFile(event: Event) {
     if (!event.target) return;
     const fileList = (event.target as HTMLInputElement).files;
     if (!fileList) return;
-    quiz.open(fileList[0]);
-    if (props.close) props.close();
+    quiz.openFile(fileList[0]);
+    emit("close");
 }
 </script>
 

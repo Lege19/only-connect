@@ -1,62 +1,65 @@
 <script setup lang="ts">
-const emits = defineEmits(["change"])
+defineEmits<{
+    (e: "clicked"): void,
+}>();
+
+const model = defineModel<boolean>();
 </script>
 
 <template>
-    <label>
-        <input type="checkbox" @change="$emit('change', ($event.target as HTMLInputElement).checked)">
-        <div id="hamburgerButton"></div>
-    </label>
+    <div id="hamburger-button" :class="{'open': model}" @click="model = !model">
+        <div class="bar top"></div>
+        <div class="bar middle"></div>
+        <div class="bar bottom"></div>
+    </div>
 </template>
 
 <style scoped lang="scss">
 @use '@/assets/styles/base';
 
-label {
+#hamburger-button {
     display: block;
     position: fixed;
     width: 1.5em;
     height: 1.5em;
     margin: 1em;
+
+    .bar {
+        background-color: base.$text-color;
+        position: absolute;
+        width: 100%;
+        height: 20%;
+        transition: all 0.25s ease-in-out;
+        transition-property: rotate, top, bottom;
+
+        &.top {
+            top: 0;
+            transition-delay: 0.1s;
+        }
+        &.middle {
+            top: 40%;
+            transition-delay: 0.05s;
+        }
+        &.bottom {
+            top: 80%;
+        }
+    }
 }
 
-input {
-    display: none;
-}
-
-#hamburgerButton, #hamburgerButton::before, #hamburgerButton::after {
-    background-color: base.$text-color;
-    position: absolute;
-    width: 100%;
-    transition: all 0.25s ease-in-out;
-    transition-property: transform, top, bottom;
-}
-
-
-#hamburgerButton {
-    top: 40%;
-    height: 20%;
-}
-#hamburgerButton::before {
-    content: "";
-    bottom: 200%;
-}
-#hamburgerButton::after {
-    content: "";
-    top: 200%;
-}
-#hamburgerButton::before, #hamburgerButton::after {
-    height: 100%;
-}
-
-input:checked + #hamburgerButton {
-    transform: rotate(45deg);
-}
-input:checked + #hamburgerButton::after {
-    top: 0;
-}
-input:checked + #hamburgerButton::before {
-    bottom: 0;
-    transform: rotate(-90deg);
+#hamburger-button.open {
+    .bar {
+        top: 40%;
+        &.top {
+            rotate: 135deg;
+            transition-delay: 0;
+        }
+        &.middle {
+            rotate: 45deg;
+        }
+        &.bottom {
+            rotate: 45deg;
+            transition-delay: 0.1s;
+        }
+    }
 }
 </style>

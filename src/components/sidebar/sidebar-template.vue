@@ -4,6 +4,10 @@ import SaveManager from '@/components/save-manager.vue';
 import { router } from "@/router/index";
 
 import { ref, type Ref } from "vue";
+
+import useQuiz from "@/stores/quiz";
+const quiz = useQuiz();
+
 const showSidebar = ref(false);
 
 const clickScope: Ref<Element|null> = ref(null)!;
@@ -15,12 +19,9 @@ window.addEventListener("click", (e) => {
     }
 });
 
-function change(to: boolean) {
-    showSidebar.value = to;
-}
-function close() {
-    if (!showSidebar.value) return;
-    document.getElementById("hamburgerButton")?.click();
+function home() {
+    quiz.close();
+    router.push('/');
 }
 </script>
 
@@ -31,9 +32,9 @@ function close() {
                 <SaveManager></SaveManager>
             </Suspense>
             <div class="inner">
-                <img src="@/assets/images/home.svg" class="home" @click="router.push('/')">
+                <img src="@/assets/images/home.svg" class="home" @click="home">
                 <div>
-                    <slot name="alignTop" :close="close"></slot>
+                    <slot name="alignTop" :close="() => showSidebar = false"></slot>
                 </div>
                 <div></div>
                 <div>
@@ -41,6 +42,6 @@ function close() {
                 </div>
             </div>
         </div>
-        <HamburgerButton @change="change($event)"></HamburgerButton>
+        <HamburgerButton v-model="showSidebar"></HamburgerButton>
     </div> 
 </template>
