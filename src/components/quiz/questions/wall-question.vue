@@ -76,7 +76,7 @@ function cardClicked(index: number) {
 function checkGroup() {
     if (wallState.value.selectedCards.length !== 4) return;
     const cardGroups = wallState.value.selectedCards.map(idx => cards[idx].group);
-    if (!cardGroups.every(groupIdx => groupIdx !== cardGroups[0])) return;
+    if (!cardGroups.every(groupIdx => groupIdx === cardGroups[0])) return;
     //if code reaches here then the selected cards DID form a group
     for (const card of wallState.value.selectedCards) {
         wallState.value.cardOrder.splice(wallState.value.cardOrder.indexOf(card), 1);
