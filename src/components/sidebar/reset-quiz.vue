@@ -1,18 +1,15 @@
 <script setup lang="ts">
 import SidebarItem from "./sidebar-item.vue";
 
-import useQuizProgress from "@/stores/quizProgress";
-const quizProgress = useQuizProgress();
-
-import { ref } from "vue";
-
 const props = defineProps<{
     close?: Function
 }>();
-
+const emit = defineEmits<{
+    (e: "resetQuiz"): void
+}>();
 function restart() {
     if (props.close) props.close();
-    quizProgress.reset();
+    emit("resetQuiz");
 }
 </script>
 

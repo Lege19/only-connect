@@ -3,14 +3,14 @@
 </script>
 
 <template>
-    <div class="item">
+    <div class="caption">
         <h1><slot></slot></h1>
     </div>
 </template>
 
 <style scoped lang="scss">
 @use '@/assets/styles/base';
-.item {
+.caption {
     background-color: base.$card-color;
     border-top-left-radius: 2vh;
     border-top-right-radius: 2vh;

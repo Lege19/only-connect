@@ -1,9 +1,17 @@
-.vowel-enter-active, .vowel-leave-active, .vowel-move {
-    transition: all 0.5s ease;
-}
+.vowel-move, /* apply transition to moving elements */
+.vowel-enter-active,
 .vowel-leave-active {
-    position: absolute;
+  transition: all 0.5s ease;
 }
-.vowel-enter-from, .vowel-leave-to {
-    opacity: 0;
+
+.vowel-enter-from,
+.vowel-leave-to {
+  opacity: 0;
+  transform: translateY(-1em);
+}
+
+/* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
+.vowel-leave-active {
+  position: absolute;
 }

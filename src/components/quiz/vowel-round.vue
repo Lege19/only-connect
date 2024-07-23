@@ -1,13 +1,57 @@
 <script setup lang="ts">
-import useQuizProgress from "@/stores/quizProgress";
-const quizProgress = useQuizProgress();
+import VowelQuestion from "./questions/vowel-question.vue";
+import RoundTitle from "./round-title.vue";
+import type { VowelRound } from "@/quizTypes";
+import { ref, type Ref } from 'vue';
 
-import VowelQuestionComponent from "./questions/vowel-question.vue";
-import type { VowelQuestion } from "@/quizTypes";
+const props = defineProps<{
+    round: VowelRound
+}>();
+
+const emit = defineEmits<{
+    (e: "nextRound"): void,
+    (e: "prevRound"): void
+}>();
+
+type VowelRoundProgress = {started: false} |
+{started: true, currentQuestion: number};
+const progress: Ref<VowelRoundProgress> = ref({started: false});
+
+function forward() {
+    if (!progress.value.started) {
+        progress.value = {started: true, currentQuestion: 0};
+    } else if (progress.value.currentQuestion + 1 < props.round.questions.length){
+        progress.value.currentQuestion++;
+    } else {
+        emit("nextRound");
+    }
+}
+function back() {
+    if (!progress.value.started) {
+        emit("prevRound")
+    } else if (progress.value.currentQuestion === 0) {
+        progress.value = {started: false};
+    } else {
+        progress.value.currentQuestion--;
+    }
+}
 </script>
 
 <template>
     <Transition mode="out-in" name="fade">
-        <VowelQuestionComponent :data="quizProgress.questionObj as VowelQuestion" :key="quizProgress.question??0"></VowelQuestionComponent>
+        <RoundTitle 
+            v-if="!progress.started" 
+            @click="forward" 
+            @keydown.arrow-right="forward"
+            @keydown.space="forward"
+            @keydown.arrow-left="back"
+        >{{ round.name }}</RoundTitle>
+        <VowelQuestion 
+            v-else="progress.started"
+            :question="round.questions[progress.currentQuestion]"
+            :key="progress.currentQuestion"
+            @next-question="forward"
+            @prev-question="back"
+        ></VowelQuestion>
     </Transition>
 </template>
