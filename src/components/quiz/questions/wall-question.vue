@@ -156,11 +156,6 @@ function back() {
 </template>
 
 <style scoped>
-/*.wall-card is more specific than the TransitionGroup which cuases the colour transition to override the move transition
-I avoid this by using :where()*/
-:where(.wall-card) {
-    transition: background-color 0.25s;
-}
 .wall-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);

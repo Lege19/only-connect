@@ -15,9 +15,6 @@ const styleOverride = computed(() => {
     if (props.group !== undefined && props.group in GroupColor) {
         style = style + `background-color: ${GroupColor[props.group]};`
     }
-    if (props.highlight) {
-        style = style + "outline: 5px solid white;"
-    }
     return style;
 });
 function getCardType() {
@@ -31,5 +28,10 @@ function getCardType() {
 </script>
 
 <template>
-    <component :is="getCardType()" :data="props.card.data" :style="styleOverride"></component>
+    <component 
+        :is="getCardType()" 
+        :data="props.card.data" 
+        :style="styleOverride" 
+        :class="{'highlight': highlight}"
+    ></component>
 </template>

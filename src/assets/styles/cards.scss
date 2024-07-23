@@ -28,6 +28,11 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    transition: background-color 0.25s, transform 0.5s ease, outline 0.5s ease;
+    outline: white solid 0px;
+    &.highlight {
+        outline: white solid 5px;
+    }
 }
 
 .question-card {
