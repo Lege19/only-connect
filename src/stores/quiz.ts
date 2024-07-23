@@ -1,22 +1,23 @@
 import { defineStore } from "pinia";
-import { ref, type Ref, computed } from "vue";
+import { ref, type Ref } from "vue";
 import { type Quiz } from "@/quizTypes";
-
+import { saveQuiz } from "@/saveManager";
 import { parse } from "@/quizParser";
 
 const useQuiz = defineStore("quiz", () => {
     const json: Ref<undefined|Quiz> = ref(undefined);
 
-    const loaded = computed(() => {
-        if (json.value) return true;
-        return false;
-    })
-
-    async function open(file: File|Blob) {
+    async function openFile(file: File|Blob) {
         let parseResult = await parse(file);
         if (!parseResult) return;
-        json.value = parseResult;
+        open(parseResult);
     }
-    return {loaded, json, open};
+    function open(file: Quiz) {
+        if (json.value) {
+            saveQuiz(json.value);
+        }
+        json.value = file
+    }
+    return {json, openFile, open};
 });
 export default useQuiz;

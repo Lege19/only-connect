@@ -3,7 +3,7 @@ import { loadAll as loadAllQuizes } from '@/saveManager';
 import { type Quiz } from '@/quizTypes';
 import useDb from '@/stores/db';
 const db = useDb();
-let quizes: Quiz[] = await loadAllQuizes(await db.db);
+let quizes: Quiz[] = await loadAllQuizes();
 </script>
 
 <template>

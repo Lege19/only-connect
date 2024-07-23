@@ -1,6 +1,17 @@
 import type { Quiz } from '@/quizTypes';
 import cloneDeep from 'lodash.clonedeep';
-function saveQuiz(quiz: Quiz, db: IDBDatabase) {
+import useDb from '@/stores/db';
+let dbStore: ReturnType<typeof useDb>;
+let db: IDBDatabase;
+
+async function tryInit() {
+    if (dbStore) return;
+    dbStore = useDb();
+    db = await dbStore.db;
+}
+async function saveQuiz(quiz: Quiz) {
+    await tryInit();
+
     console.log("save")
     const transaction = db.transaction('quizes', 'readwrite');
     const os = transaction.objectStore('quizes');
@@ -9,11 +20,13 @@ function saveQuiz(quiz: Quiz, db: IDBDatabase) {
     query.onsuccess = () => console.log("success");
 }
 
-function loadQuiz(id: string, db: IDBDatabase): Promise<Quiz> {
+async function loadQuiz(id: string): Promise<Quiz> {
+    await tryInit();
+
     const transaction = db.transaction('quizes', 'readonly');
     const os = transaction.objectStore('quizes');
     const query = os.get(id);
-    return new Promise((resolve, reject) => {
+    return await new Promise((resolve, reject) => {
         query.onsuccess = () => resolve(query.result);
         query.onerror = (e) => {
             console.error(e);
@@ -22,11 +35,13 @@ function loadQuiz(id: string, db: IDBDatabase): Promise<Quiz> {
     });
 }
 
-function loadAll(db: IDBDatabase): Promise<Quiz[]> {
+async function loadAll(): Promise<Quiz[]> {
+    await tryInit();
+
     const transaction = db.transaction('quizes', 'readonly');
     const os = transaction.objectStore('quizes');
     const query = os.getAll();
-    return new Promise((resolve, reject) => {
+    return await new Promise((resolve, reject) => {
         query.onsuccess = () => resolve(query.result);
         query.onerror = (e) => {
             console.error(e);
