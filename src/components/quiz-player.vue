@@ -42,6 +42,10 @@ function back() {
         progress.value.roundIdx--;
     }
 }
+function resetQuiz() {
+    progress.value = {phase: QuizPhase.TitleScreen};
+}
+defineExpose({ resetQuiz, prevRound: back, nextRound: forward });
 </script>
 
 <template v-if="quiz.loaded">
