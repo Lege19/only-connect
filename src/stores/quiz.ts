@@ -4,10 +4,7 @@ import { type Quiz } from "@/quizTypes";
 
 import { parse } from "@/quizParser";
 
-import useQuizProgress from "./quizProgress";
-
 const useQuiz = defineStore("quiz", () => {
-    const quizProgress = useQuizProgress();
     const json: Ref<undefined|Quiz> = ref(undefined);
 
     const loaded = computed(() => {
@@ -19,7 +16,6 @@ const useQuiz = defineStore("quiz", () => {
         let parseResult = await parse(file);
         if (!parseResult) return;
         json.value = parseResult;
-        quizProgress.reset();
     }
     return {loaded, json, open};
 });
