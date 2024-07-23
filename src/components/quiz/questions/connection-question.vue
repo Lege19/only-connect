@@ -13,7 +13,7 @@ const emit = defineEmits<{
     (e: 'questionFinished'): void,
     (e: "questionCanceled"): void
 }>()
-const cardsShown: Ref<number> = ref(0);
+const cardsShown: Ref<number> = ref(1);
 const showCaption: Ref<boolean> = ref(false);
 function forward() {
     if (cardsShown.value < 4) {
@@ -27,7 +27,7 @@ function forward() {
 function back() {
     if (showCaption.value) {
         showCaption.value = false;
-    } else if (cardsShown.value === 0) {
+    } else if (cardsShown.value === 1) {
         emit("questionCanceled");
     } else {
         cardsShown.value--;
