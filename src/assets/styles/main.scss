@@ -1,8 +1,8 @@
 @use 'base';
-@use 'save-manager';
 @use 'cards';
 @use 'vowel';
 @use 'sidebar';
+@use 'loading-wheel';
 
 html, body {
     width: 100%;
