@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import QuizPreview from "@/components/quiz-preview.vue";
+import AreYouSure from "@/components/are-you-sure.vue";
 
 import { loadAll, deleteQuiz } from "@/saveManager";
 import { ref, type Ref, type VNodeRef } from "vue";
@@ -18,6 +19,8 @@ async function loadQuizes() {
 }
 loadQuizes();
 
+const areYouSureRef: Ref<null|typeof AreYouSure> = ref(null);
+
 function edit(quiz: Quiz) {
     quizStore.open(quiz);
     router.push("/create");
@@ -26,8 +29,11 @@ function play(quiz: Quiz) {
     quizStore.open(quiz);
     router.push("/play");
 }
-function deleteQuizAtIndex(index: number) {
+async function deleteQuizAtIndex(index: number) {
     if (!quizes.value.loaded) return;
+    if (!areYouSureRef.value) return;
+    if (!await areYouSureRef.value.test()) return;
+
     deleteQuiz(quizes.value.data[index].id);
     quizes.value.data.splice(index, 1);
 }
@@ -36,6 +42,7 @@ function deleteQuizAtIndex(index: number) {
 <template>
     <h1>Only Connect</h1>
     <RouterLink to="/create">New Quiz</RouterLink>
+    <AreYouSure ref="areYouSureRef"></AreYouSure>
     <table v-if="quizes.loaded" id="quiz-table">
         <thead>
             <th>Name</th>

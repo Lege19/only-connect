@@ -1,0 +1,46 @@
+@use 'base';
+
+.are-you-sure {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #00000079;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .window {
+        background-color: base.$ui-background-color;
+        
+        border-radius: 10px;
+        border: solid white 4px;
+        opacity: 1;
+        display: flex;
+        flex-direction: column;
+        h1 {
+            margin: 1em;
+        }
+        #spacer {
+            flex-grow: 1;
+        }
+        .options {
+            display: flex;
+            #yes, #no {
+                flex-grow: 1;
+                transition: background-color 0.25s;
+                font-size: 1.5em;
+                padding: 0.5em;
+                &:hover {
+                    background-color: base.$accent-color;
+                }
+            }
+            #yes {
+                border-bottom-left-radius: 6px;
+            }
+            #no {
+                border-bottom-right-radius: 6px;
+            }
+        }
+    }
+}
