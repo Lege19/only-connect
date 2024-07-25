@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import QuizPreview from "@/components/quiz-preview.vue";
 import AreYouSure from "@/components/are-you-sure.vue";
+import UploadQuiz from "@/components/sidebar/upload-quiz.vue";
+import NewQuiz from "@/components/sidebar/new-quiz.vue";
 
 import { loadAll, deleteQuiz } from "@/saveManager";
 import { ref, type Ref, type VNodeRef } from "vue";
 import type { Quiz } from "@/quizTypes";
 import { router } from "@/router/index";
+import { saveAs } from "file-saver";
 
 import useQuiz from "@/stores/quiz";
 const quizStore = useQuiz();
@@ -29,6 +32,9 @@ function play(quiz: Quiz) {
     quizStore.open(quiz);
     router.push("/play");
 }
+function download(quiz: Quiz) {
+    saveAs(new Blob([JSON.stringify(quiz)]), quiz.name + ".json")
+}
 async function deleteQuizAtIndex(index: number) {
     if (!quizes.value.loaded) return;
     if (!areYouSureRef.value) return;
@@ -40,25 +46,32 @@ async function deleteQuizAtIndex(index: number) {
 </script>
 
 <template>
-    <h1>Only Connect</h1>
-    <RouterLink to="/create">New Quiz</RouterLink>
-    <AreYouSure ref="areYouSureRef"></AreYouSure>
-    <table v-if="quizes.loaded" id="quiz-table">
-        <thead>
-            <th>Name</th>
-            <th>Last Edited</th>
-            <th>Created</th>
-            <th></th>
-        </thead>
-        <tbody>
-            <QuizPreview 
-                v-for="[index, quiz] in quizes.data.entries()" 
-                :quiz="quiz"
-                @edit="edit(quiz)"
-                @play="play(quiz)"
-                @delete="deleteQuizAtIndex(index)"
-                :key="quiz.id"
-            ></QuizPreview>
-        </tbody>
-    </table>
+    <div id="home-page-container">
+        <h1>Only Connect</h1>
+        <AreYouSure ref="areYouSureRef"></AreYouSure>
+        <div id="quiz-manager">
+            <div id="buttons-container">
+                <NewQuiz></NewQuiz>
+                <UploadQuiz></UploadQuiz>
+            </div>
+            <div id="quiz-grid">
+                <div v-if="quizes.loaded" id="inner">
+                    <b id="name" class="header">Name</b>
+                    <b id="last-edited" class="header">Last Edited</b>
+                    <b id="created" class="header">Created</b>
+                    <b class="header"></b>
+                    <QuizPreview 
+                        v-for="[index, quiz] in quizes.data.entries()" 
+                        :quiz="quiz"
+                        @edit="edit(quiz)"
+                        @play="play(quiz)"
+                        @delete="deleteQuizAtIndex(index)"
+                        @download="download(quiz)"
+                        :key="quiz.id"
+                        class="quiz-preview"
+                    ></QuizPreview>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>

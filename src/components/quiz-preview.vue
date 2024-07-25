@@ -33,14 +33,14 @@ function formatDate(date: Date): string {
 </script>
 
 <template>
-    <tr @dblclick.prevent="$emit('edit')">
-        <td>{{ quiz.name }}</td>
-        <td>{{ formatDate(quiz.edited) }}</td>
-        <td>{{ formatDate(quiz.created) }}</td>
-        <td class="icons">
+    <div @dblclick="$emit('edit')">
+        <b id="name">{{ quiz.name }}</b>
+        <b id="edited">{{ formatDate(quiz.edited) }}</b>
+        <b id="created">{{ formatDate(quiz.created) }}</b>
+        <div class="icons">
             <img src="@/assets/images/play.svg" @click.stop="$emit('play')">
             <img src="@/assets/images/download.svg" @click.stop="$emit('download')">
             <img src="@/assets/images/cross.svg" @click.stop="$emit('delete')">
-        </td>
-    </tr>
+        </div>
+    </div>
 </template>

@@ -1,36 +1,57 @@
 @use 'base';
 
-#quiz-table {
-    border-spacing: 0;
-    width: 80%;
-    margin: auto;
-    border: solid white 4px;
-    border-radius:10px;
-    font-size: 1.5em;
-    transition: height 5s;
-    thead {
-        background-color: base.$ui-background-color;
-        th:nth-child(1) {
-            width: 25%;
+#home-page-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    #quiz-manager {
+        flex-grow: 1;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        margin-left: 2em;
+        margin-right: 2em;
+        margin-bottom: 2em;
+        height: 100%;
+        gap: 1em;
+        #buttons-container {
+            display: flex;
+            flex-direction: column;
+            border: solid white 4px;
+            border-radius: 10px;
+            background-color: base.$ui-background-color;
         }
-    }
-    
-    tbody {
-        tr {
-            width: 100%;
-            .icons {
-                display: flex;
-                justify-content: flex-end;
-                grid-column: 4;
-                padding: 0.2em;
-                img {
-                    visibility: hidden;
-                    margin-left: 0.25em;
-                    margin-right: 0.25em;
+        #quiz-grid {
+            grid-column: 2;
+            overflow: scroll;
+            height: 100%;
+            border: solid white 4px;
+            border-radius:10px;
+            font-size: 1.5em;
+            box-sizing: border-box;
+            #inner {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr max-content;
+                b.header {
+                    background-color: base.$ui-background-color;
                 }
-            }
-            &:hover .icons img {
-                visibility: visible;
+                .quiz-preview {
+                    width: 100%;
+                    display: contents;
+                    .icons {
+                        display: flex;
+                        justify-content: flex-end;
+                        grid-column: 4;
+                        padding: 0.2em;
+                        img {
+                            visibility: hidden;
+                            margin-left: 0.25em;
+                            margin-right: 0.25em;
+                        }
+                    }
+                    &:hover .icons img {
+                        visibility: visible;
+                    }
+                }
             }
         }
     }

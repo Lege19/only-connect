@@ -33,7 +33,7 @@ defineEmits<{
 
     #forward, #back {
         padding: 1em;
-        transition: background-color 0.2s;
+        transition: background-color 0.25s;
         &:hover {
             background-color: base.$accent-color;
             .icon {
