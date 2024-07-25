@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import useQuiz from "@/stores/quiz";
 const quiz = useQuiz();
-import useDb from '@/stores/db';
-const db = useDb();
+
 import EditorRound from "./editor/editor-round.vue";
 import InputBox from "./editor/input-box.vue";
 import { RoundType } from "@/quizTypes";
@@ -11,9 +10,9 @@ import { saveQuiz } from '@/saveManager';
 import { nanoid } from 'nanoid';
 
 
-if (!quiz.loaded) {
+if (!quiz.json) {
     quiz.json = {
-        name: "",
+        name: "Unamed Quiz",
         id: nanoid(),
         created: new Date(),
         edited: new Date(),
@@ -31,42 +30,42 @@ watch(quiz, (curr, prev) => {
         autosave();
     }
 });
-async function autosave() {
-    if (db.db && quiz.json) {
+function autosave() {
+    if (quiz.json) {
         quiz.json.edited = new Date();
-        saveQuiz(quiz.json, await db.db);
+        saveQuiz(quiz.json);
     }
 }
 </script>
 
 <template>
-    <div id="editor-container">
-        <InputBox v-model="quiz.json!.name"></InputBox>
+    <div id="editor-container" v-if="quiz.json">
+        <InputBox v-model="quiz.json.name"></InputBox>
         <ol style="width: 60%">
-            <li v-for="i in quiz.json!.rounds.keys()" style="margin-bottom: 1em">
-                <EditorRound v-model="quiz.json!.rounds[i]" v-model:move="quiz.json!.rounds" :del="() => {quiz.json!.rounds.splice(i, 1)}" :index="i"></EditorRound>
+            <li v-for="i in quiz.json.rounds.keys()" style="margin-bottom: 1em">
+                <EditorRound v-model="quiz.json.rounds[i]" v-model:move="quiz.json.rounds" :del="() => {quiz.json?.rounds.splice(i, 1)}" :index="i"></EditorRound>
             </li>
             <div id="new-round-container">
-                <div class="new-round-button" @click="() => {quiz.json!.rounds.push({
+                <div class="new-round-button" @click="quiz.json.rounds.push({
                     'name': '',
                     'type': RoundType.Connection,
                     'questions': []
-                    })}">Connection</div>
-                <div class="new-round-button" @click="() => {quiz.json!.rounds.push({
+                    })">Connection</div>
+                <div class="new-round-button" @click="quiz.json.rounds.push({
                     'name': '',
                     'type': RoundType.Sequence,
                     'questions': []
-                    })}">Sequence</div>
-                <div class="new-round-button" @click="() => {quiz.json!.rounds.push({
+                    })">Sequence</div>
+                <div class="new-round-button" @click="quiz.json.rounds.push({
                     'name': '',
                     'type': RoundType.Wall,
                     'questions': []
-                    })}">Wall</div>
-                <div class="new-round-button" @click="() => {quiz.json!.rounds.push({
+                    })">Wall</div>
+                <div class="new-round-button" @click="quiz.json.rounds.push({
                     'name': '',
                     'type': RoundType.Vowel,
                     'questions': []
-                    })}">Vowel</div>
+                    })">Vowel</div>
             </div>
         </ol>
     </div>
@@ -93,4 +92,4 @@ async function autosave() {
     flex-direction: column;
     text-align: center;
 }
-</style>./editor/editor-round.vue
+</style>

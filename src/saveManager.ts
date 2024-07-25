@@ -12,12 +12,10 @@ async function tryInit() {
 async function saveQuiz(quiz: Quiz) {
     await tryInit();
 
-    console.log("save")
     const transaction = db.transaction('quizes', 'readwrite');
     const os = transaction.objectStore('quizes');
     const query = os.put(cloneDeep(quiz));
     query.onerror = (e) => console.error(e);
-    query.onsuccess = () => console.log("success");
 }
 
 async function loadQuiz(id: string): Promise<Quiz> {
@@ -32,6 +30,18 @@ async function loadQuiz(id: string): Promise<Quiz> {
             console.error(e);
             reject(e);
         };
+    });
+}
+async function deleteQuiz(id: string) {
+    const transaction = db.transaction('quizes', 'readwrite');
+    const os = transaction.objectStore('quizes');
+    const query = os.delete(id);
+    return await new Promise((resolve, reject) => {
+        query.onsuccess = () => resolve(query.result);
+        query.onerror = (e) => {
+            console.error(e);
+            reject(e);
+        }
     });
 }
 
@@ -49,4 +59,4 @@ async function loadAll(): Promise<Quiz[]> {
         }
     })
 }
-export { saveQuiz, loadQuiz, loadAll };
+export { saveQuiz, loadQuiz, loadAll, deleteQuiz };

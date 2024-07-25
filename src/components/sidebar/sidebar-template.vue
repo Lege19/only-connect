@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import HamburgerButton from './hamburger-button.vue';
-import SaveManager from '@/components/save-manager.vue';
 import { router } from "@/router/index";
 
 import { ref, type Ref } from "vue";
@@ -15,7 +14,7 @@ const clickScope: Ref<Element|null> = ref(null)!;
 window.addEventListener("click", (e) => {
     if (!clickScope.value) return;
     if (!clickScope.value.contains(e.target! as Node)) {
-        close();
+        showSidebar.value = false;
     }
 });
 
@@ -28,9 +27,6 @@ function home() {
 <template>
     <div ref="clickScope">
         <div :class="{'open': showSidebar}" class="sidebar">
-            <Suspense>
-                <SaveManager></SaveManager>
-            </Suspense>
             <div class="inner">
                 <img src="@/assets/images/home.svg" class="home" @click="home">
                 <div>
@@ -43,5 +39,5 @@ function home() {
             </div>
         </div>
         <HamburgerButton v-model="showSidebar"></HamburgerButton>
-    </div> 
+    </div>
 </template>

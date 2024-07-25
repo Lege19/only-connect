@@ -18,11 +18,14 @@ const useQuiz = defineStore("quiz", () => {
         }
         json.value = file
     }
-    function close() {
+    function saveCurrent() {
         if (!json.value) return;
         saveQuiz(json.value);
+    }
+    function close() {
+        saveCurrent()
         json.value = undefined;
     }
-    return {json, openFile, open, close};
+    return {json, openFile, open, close, saveCurrent};
 });
 export default useQuiz;

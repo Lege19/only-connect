@@ -13,6 +13,7 @@ async function openFile(event: Event) {
     const fileList = (event.target as HTMLInputElement).files;
     if (!fileList) return;
     quiz.openFile(fileList[0]);
+    quiz.saveCurrent();
     emit("close");
 }
 </script>

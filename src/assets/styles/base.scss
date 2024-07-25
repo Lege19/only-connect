@@ -5,11 +5,11 @@ $used-card-color: #78bbff;
 $ui-background-color: #101018;
 $accent-color: #1f1f3d;
 
-p, a, h1, h2, th, td, ol {
+p, a, h1, b, h2, th, td, ol {
     color: $text-color;
 }
 
-p, a, h2, th, td {
+p, a, h2, b, th, td {
     margin: 0;
     text-decoration: none;
     text-align: center;
