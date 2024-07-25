@@ -51,7 +51,7 @@ async function deleteQuizAtIndex(index: number) {
         <AreYouSure ref="areYouSureRef"></AreYouSure>
         <div id="quiz-manager">
             <div id="buttons-container">
-                <NewQuiz></NewQuiz>
+                <NewQuiz style="border-top-left-radius:6px;border-top-right-radius:6px;"></NewQuiz>
                 <UploadQuiz></UploadQuiz>
             </div>
             <div id="quiz-grid">
