@@ -6,9 +6,12 @@ import { type Ref, computed } from "vue";
 import { type Question, RoundType } from "@/quizTypes";
 const model: Ref<Question|undefined> = defineModel();
 const props = defineProps<{
-    roundType: RoundType,
-    del: () => void
-}>()
+    roundType: RoundType
+}>();
+defineEmits<{
+    (e: "delete"): void
+}>();
+
 const component = computed(() => {
     switch (props.roundType) {
         case RoundType.Connection:
@@ -22,6 +25,6 @@ const component = computed(() => {
 });
 </script>
 
-<template v-if="model">
-    <component :is="component" v-model="model" :del="del"></component>
+<template>
+    <component :is="component" v-model="model" @delete="$emit('delete')"></component>
 </template>

@@ -46,5 +46,6 @@ textarea {
 .icons {
     display: flex;
     align-content: center;
+    gap: 0.5em;
 }
 </style>

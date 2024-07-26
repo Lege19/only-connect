@@ -4,17 +4,18 @@ import DeleteItem from "./delete-item.vue";
 import { type Ref } from "vue";
 import { type Group } from "@/quizTypes";
 const model: Ref<Group[]|undefined> = defineModel();
-defineProps<{
-    del: () => void
+
+defineEmits<{
+    (e: "delete"): void
 }>();
 </script>
 
-<template v-if="model">
-    <div class="outer">
+<template>
+    <div v-if="model" class="outer">
         <div class="inner">
-            <EditorGroup v-for="i in model!.keys()" v-model="model![i]"></EditorGroup>
+            <EditorGroup v-for="i in model.keys()" v-model="model[i]"></EditorGroup>
         </div>
-        <DeleteItem :del="del"></DeleteItem>
+        <DeleteItem @delete="$emit('delete')"></DeleteItem>
     </div>
 </template>
 

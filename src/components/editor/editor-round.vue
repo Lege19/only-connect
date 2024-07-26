@@ -10,8 +10,10 @@ import { RoundType, type Round, CardType, type Group, type WallQuestion } from "
 const model: Ref<Round|undefined> = defineModel();
 const moveModel: Ref<Round[]|undefined> = defineModel("move");
 defineProps<{
-    del: () => void,
     index: number
+}>();
+defineEmits<{
+    (e: "delete"): void
 }>();
 function blankGroup(): Group {
     return {"name": "",
@@ -42,17 +44,17 @@ function addQuestion() {
 }
 </script>
 
-<template v-if="model">
-    <div class="round-container">
-            <InputBox v-model="model!.name" class="round-name">
+<template>
+    <div class="round-container" v-if="model">
+            <InputBox v-model="model.name" class="round-name">
                 <p class="round-type">{{ ["Connection", "Sequence", "Wall", "Vowel"][model!.type] }}</p>
                 <MoveItem v-model="moveModel" :index="index"></MoveItem>
-                <DeleteItem :del="del"></DeleteItem>
+                <DeleteItem @delete="$emit('delete')"></DeleteItem>
             </InputBox>
         <GenericQuestion v-for="i in model!.questions.keys()" 
-        v-model="model!.questions[i]" 
-        :del="() => {model!.questions.splice(i, 1)}"
-        :round-type="model!.type"></GenericQuestion>
+        v-model="model.questions[i]" 
+        @delete="model.questions.splice(i, 1)"
+        :round-type="model.type"></GenericQuestion>
         <NewItem :func="addQuestion"></NewItem>
     </div>
 </template>
@@ -67,7 +69,6 @@ function addQuestion() {
     grid-column: 1/span 2;
 }
 .round-type {
-    margin-right: 1em;
     color: gray;
 }
 </style>

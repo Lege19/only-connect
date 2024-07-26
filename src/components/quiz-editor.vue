@@ -1,26 +1,14 @@
 <script setup lang="ts">
-import useQuiz from "@/stores/quiz";
-const quiz = useQuiz();
-
 import EditorRound from "./editor/editor-round.vue";
 import InputBox from "./editor/input-box.vue";
 import { RoundType } from "@/quizTypes";
-import { watch } from 'vue';
+import { watch, type Ref } from 'vue';
 import { saveQuiz } from '@/saveManager';
-import { nanoid } from 'nanoid';
+import { type Quiz } from "@/quizTypes";
 
+const quiz: Ref<Quiz|undefined> = defineModel();
 
-if (!quiz.json) {
-    quiz.json = {
-        name: "Unamed Quiz",
-        id: nanoid(),
-        created: new Date(),
-        edited: new Date(),
-        rounds: []
-    };
-}
-
-// counter increases when quiz is changes to keep track of when to autosave
+// counter increases when quiz changes to keep track of when to autosave
 let changes = 0;
 
 watch(quiz, (curr, prev) => {
@@ -31,65 +19,61 @@ watch(quiz, (curr, prev) => {
     }
 });
 function autosave() {
-    if (quiz.json) {
-        quiz.json.edited = new Date();
-        saveQuiz(quiz.json);
-    }
+    if (!quiz.value) return;
+    quiz.value.edited = new Date();
+    saveQuiz(quiz.value);
+}
+function addRound(type: RoundType) {
+    if (!quiz.value) return;
+    quiz.value.rounds.push({
+        name: "",
+        type: type,
+        questions: []
+    });
 }
 </script>
 
 <template>
-    <div id="editor-container" v-if="quiz.json">
-        <InputBox v-model="quiz.json.name"></InputBox>
+    <div id="editor-container" v-if="quiz">
+        <InputBox v-model="quiz.name"></InputBox>
         <ol style="width: 60%">
-            <li v-for="i in quiz.json.rounds.keys()" style="margin-bottom: 1em">
-                <EditorRound v-model="quiz.json.rounds[i]" v-model:move="quiz.json.rounds" :del="() => {quiz.json?.rounds.splice(i, 1)}" :index="i"></EditorRound>
+            <li v-for="i in quiz.rounds.keys()" style="margin-bottom: 1em">
+                <EditorRound 
+                    v-model="quiz.rounds[i]" 
+                    v-model:move="quiz.rounds" 
+                    @delete="quiz.rounds.splice(i, 1)" 
+                    :index="i"
+                ></EditorRound>
             </li>
             <div id="new-round-container">
-                <div class="new-round-button" @click="quiz.json.rounds.push({
-                    'name': '',
-                    'type': RoundType.Connection,
-                    'questions': []
-                    })">Connection</div>
-                <div class="new-round-button" @click="quiz.json.rounds.push({
-                    'name': '',
-                    'type': RoundType.Sequence,
-                    'questions': []
-                    })">Sequence</div>
-                <div class="new-round-button" @click="quiz.json.rounds.push({
-                    'name': '',
-                    'type': RoundType.Wall,
-                    'questions': []
-                    })">Wall</div>
-                <div class="new-round-button" @click="quiz.json.rounds.push({
-                    'name': '',
-                    'type': RoundType.Vowel,
-                    'questions': []
-                    })">Vowel</div>
+                <div class="button" @click="addRound(RoundType.Connection)">Connection</div>
+                <div class="button" @click="addRound(RoundType.Sequence)">Sequence</div>
+                <div class="button" @click="addRound(RoundType.Wall)">Wall</div>
+                <div class="button" @click="addRound(RoundType.Vowel)">Vowel</div>
             </div>
         </ol>
     </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 #editor-container {
     width: 100%;
     display: flex;
     align-items: center;
     flex-direction: column;
-}
-#new-round-container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1em;
-}
-.new-round-button {
-    border: 3px gray dashed;
-    border-radius: 10px;
-    height: 2em;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
+    #new-round-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1em;
+        .button {
+            border: 3px gray dashed;
+            border-radius: 10px;
+            height: 2em;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+        }
+    }
 }
 </style>

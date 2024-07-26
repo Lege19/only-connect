@@ -1,11 +1,11 @@
 <script setup lang="ts">
-defineProps<{
-    func: () => void
+defineEmits<{
+    (e: 'new'): void
 }>();
 </script>
 
 <template>
-    <div class="dashed-outline" @click="func">
+    <div class="dashed-outline" @click="$emit('new')">
         <img src="@/assets/images/add.svg">
     </div>
 </template>

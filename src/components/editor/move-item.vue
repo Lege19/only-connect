@@ -19,7 +19,7 @@ function moveDown() {
 <template>
     <div>
         <img src="@/assets/images/up.svg" @click="moveUp">
-        <img src="@/assets/images/down.svg" @click="moveDown">
+        <img src="@/assets/images/up.svg" @click="moveDown" style="transform: scaleY(-1)">
     </div>
 </template>
 
@@ -27,8 +27,5 @@ function moveDown() {
 div {
     display: flex;
     flex-direction: column;
-}
-img {
-    height: 0.5em;
 }
 </style>

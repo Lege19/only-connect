@@ -5,23 +5,24 @@ import { type VowelQuestion } from "@/quizTypes";
 import { type Ref } from "vue";
 import InputBox from "./input-box.vue";
 const model: Ref<VowelQuestion|undefined> = defineModel();
-defineProps<{
-    del: () => void
+
+defineEmits<{
+    (e: "delete"): void
 }>();
 </script>
 
-<template v-if="model">
-    <div>
-        <InputBox v-model="model!.name">
-            <DeleteItem :del="del"></DeleteItem>
+<template>
+    <div v-if="model">
+        <InputBox v-model="model.name">
+            <DeleteItem @delete="$emit('delete')"></DeleteItem>
         </InputBox>
         <ol>
-            <li v-for="i in model!.phrases.keys()">
-                <InputBox v-model="model!.phrases[i]">
-                    <DeleteItem :del="() => {model!.phrases.splice(i, 1)}"></DeleteItem>
+            <li v-for="i in model.phrases.keys()">
+                <InputBox v-model="model.phrases[i]">
+                    <DeleteItem @delete="model.phrases.splice(i, 1)"></DeleteItem>
                 </InputBox>
             </li>
-            <NewItem :func="() => {model!.phrases.push('')}"></NewItem>
+            <NewItem @new="model.phrases.push('')"></NewItem>
         </ol>
     </div>
 </template>

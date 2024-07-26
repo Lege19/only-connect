@@ -1,9 +1,9 @@
 <script setup lang="ts">
-defineProps<{
-    del: () => void
-}>()
+defineEmits<{
+    (e: "delete"): void
+}>();
 </script>
 
 <template>
-    <img @click="del" src="@/assets/images/cross.svg">
+    <img @click="$emit('delete')" src="@/assets/images/cross.svg">
 </template>

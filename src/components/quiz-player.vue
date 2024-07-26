@@ -48,7 +48,7 @@ function resetQuiz() {
 defineExpose({ resetQuiz, prevRound: back, nextRound: forward });
 </script>
 
-<template v-if="quiz.loaded">
+<template>
     <div id="quiz-player">
         <transition mode="out-in" name="fade">
             <QuizTitle 

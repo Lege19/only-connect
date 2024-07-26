@@ -2,12 +2,12 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="15.999578"
-   height="10.499937"
-   viewBox="0 0 4.2332215 2.778108"
+   width="18"
+   height="9"
+   viewBox="0 0 4.7624997 2.3812497"
    version="1.1"
    id="svg5"
-   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   inkscape:version="1.3.2 (091e20ef0f, 2023-11-25)"
    sodipodi:docname="up.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -27,9 +27,9 @@
      inkscape:cx="8.9769415"
      inkscape:cy="6.9571296"
      inkscape:window-width="1920"
-     inkscape:window-height="991"
-     inkscape:window-x="-9"
-     inkscape:window-y="-9"
+     inkscape:window-height="1008"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
      fit-margin-top="1"
@@ -39,14 +39,19 @@
      units="px"
      height="17.70271px"
      inkscape:snap-page="true"
-     lock-margins="true">
+     lock-margins="true"
+     inkscape:showpageshadow="0"
+     inkscape:deskcolor="#505050">
     <inkscape:grid
        type="xygrid"
        id="grid824"
-       originx="-29.236515"
-       originy="-61.78022"
+       originx="0"
+       originy="0"
        spacingx="0.13229166"
-       spacingy="0.13229166" />
+       spacingy="0.13229166"
+       units="px"
+       visible="true"
+       empspacing="6" />
   </sodipodi:namedview>
   <defs
      id="defs2" />
@@ -57,7 +62,7 @@
      transform="translate(-29.23651,-61.780225)">
     <path
        style="font-variation-settings:normal;opacity:1;vector-effect:none;fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:0.79375;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000;stop-opacity:1"
-       d="m 31.35312,62.441667 -1.455208,1.455208 h 2.910417 z"
+       d="m 31.61776,62.573975 -1.5875,0.79375 h 3.175 z"
        id="path1730"
        sodipodi:nodetypes="cccc" />
   </g>
