@@ -19,6 +19,30 @@
             border: solid white 4px;
             border-radius: 10px;
             background-color: base.$ui-background-color;
+            & > *:first-child {
+                border-top-left-radius:6px;
+                border-top-right-radius:6px;
+            }
+            .button {
+                padding: 1em;
+                transition: background-color 0.25s;
+                background-color: base.$ui-background-color;
+                &:hover {
+                    background-color: base.$accent-color
+                }
+                p {
+                    margin: 0;
+                    text-align: left;
+                }
+                img {
+                    height: 1em;
+                    transition: scale 0.1s;
+                    float: right;
+                }
+                img:hover {
+                    scale: 1.2;
+                }
+            }
         }
         #quiz-grid {
             grid-column: 2;
