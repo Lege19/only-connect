@@ -1,6 +1,7 @@
 import type { Quiz } from '@/quizTypes';
 import useDb from '@/stores/db';
 import { nanoid } from 'nanoid';
+import cloneDeep from 'lodash.clonedeep';
 
 let dbStore: ReturnType<typeof useDb>;
 let db: IDBDatabase;
@@ -15,7 +16,7 @@ async function saveQuiz(quiz: Quiz): Promise<void> {
 
     const transaction = db.transaction('quizes', 'readwrite');
     const os = transaction.objectStore('quizes');
-    const query = os.put(quiz);
+    const query = os.put(cloneDeep(quiz));
     await dbRequestToPromise(query);
 }
 
