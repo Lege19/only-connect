@@ -5,6 +5,9 @@ import InputBox from "./input-box.vue";
 import DeleteItem from "./delete-item.vue";
 const model: Ref<Group|undefined> = defineModel();
 
+defineProps<{
+    undeletable?: boolean
+}>();
 defineEmits<{
     (e: "delete"): void
 }>();
@@ -13,7 +16,7 @@ defineEmits<{
 <template>
     <div v-if="model">
         <InputBox v-model="model.name" placeholder="Group Caption">
-            <DeleteItem @delete="$emit('delete')"></DeleteItem>
+            <DeleteItem v-if="!undeletable" @delete="$emit('delete')"></DeleteItem>
         </InputBox>
         <ol>
             <li v-for="i in model.cards.keys()">

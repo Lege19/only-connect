@@ -13,7 +13,7 @@ defineEmits<{
 <template>
     <div v-if="model" class="outer">
         <div class="inner">
-            <EditorGroup v-for="i in model.keys()" v-model="model[i]"></EditorGroup>
+            <EditorGroup v-for="i in model.keys()" v-model="model[i]" undeletable></EditorGroup>
         </div>
         <DeleteItem @delete="$emit('delete')"></DeleteItem>
     </div>
@@ -27,6 +27,7 @@ defineEmits<{
     gap: 1em;
     border: 4px base.$ui-background-color solid;
     border-radius: 10px;
+    margin-right: 0.5em;
 }
 
 .outer {
