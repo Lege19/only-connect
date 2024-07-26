@@ -1,0 +1,40 @@
+@use 'base';
+
+.icon-list {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5em;
+    padding: 0.5em;
+
+    #home {
+        transition: scale 0.2s;
+        width: 1.5em;
+        height: 1.5em;
+        &:hover {
+            scale: 1.2;
+        }
+    }
+    .icon {
+        width: 1.5em;
+        height: 1.5em;
+        translate: calc(-100% - 0.5em) 0;
+        transition: translate 0.2s, scale 0.2s;
+        transition-delay: calc(0.2s - var(--index) * 0.05s), 0s;
+        &:hover {
+            scale: 1.2;
+        }
+        @for $i from 1 through 5 {
+            &:nth-child(#{$i}) {
+                --index: #{$i};
+            }
+        }
+    }
+    &:hover .icon {
+        translate: 0 0;
+        transition-delay: calc(var(--index) * 0.05s), 0s;
+    }
+
+}

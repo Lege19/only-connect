@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import QuizEditor from "@/components/quiz-editor.vue";
-import CreateSidebar from "@/components/create-sidebar.vue";
+import CreateMenu from "@/components/menus/create-menu.vue"
 
 import { router } from "@/router/index";
 import { useRoute } from "vue-router";
@@ -9,31 +9,24 @@ import { ref, type Ref } from "vue";
 import type { Quiz } from "@/quizTypes";
 
 import useQuiz from "@/stores/quiz";
-const quizStore = useQuiz();
+const quiz = useQuiz();
 
 const route = useRoute();
 
-type State = {loaded: false} | 
-{loaded: true, quiz: Quiz};
-
-const state: Ref<State> = ref({loaded: false});
-
 async function init() {
     if (route.params.id === "") {
-        if (quizStore.json) {
-            state.value = {loaded: true, quiz: quizStore.json};
-        } else {
-            state.value = {loaded: true, quiz: await newQuiz()};
+        if (!quiz.json) {
+            quiz.open(await newQuiz());
         }
-        router.replace("/create/" + state.value.quiz.id);
+        router.replace("/create/" + quiz.json!.id);
     } else {
-        state.value = {loaded: true, quiz: await loadQuiz(route.params.id as string)}
+        quiz.open(await loadQuiz(route.params.id as string));
     }
 }
 init();
 </script>
 
 <template>
-    <CreateSidebar></CreateSidebar>
-    <QuizEditor v-if="state.loaded" v-model="state.quiz"></QuizEditor>
+    <CreateMenu></CreateMenu>
+    <QuizEditor v-if="quiz.json" v-model="quiz.json"></QuizEditor>
 </template>
