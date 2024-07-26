@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import QuizPreview from "@/components/quiz-preview.vue";
 import AreYouSure from "@/components/are-you-sure.vue";
-import UploadQuiz from "@/components/sidebar/upload-quiz.vue";
-import NewQuiz from "@/components/sidebar/new-quiz.vue";
+import UploadQuiz from "@/components/menus/upload-quiz.vue";
 
 import { loadAll, deleteQuiz } from "@/saveManager";
 import { ref, type Ref, type VNodeRef } from "vue";
@@ -51,7 +50,12 @@ async function deleteQuizAtIndex(index: number) {
         <AreYouSure ref="areYouSureRef"></AreYouSure>
         <div id="quiz-manager">
             <div id="buttons-container">
-                <NewQuiz style="border-top-left-radius:6px;border-top-right-radius:6px;"></NewQuiz>
+                <div class="button" @click="router.push('/create')">
+                    <p>
+                        New Quiz
+                        <img src="@/assets/images/add.svg">
+                    </p>
+                </div>
                 <UploadQuiz></UploadQuiz>
             </div>
             <div id="quiz-grid">
