@@ -5,6 +5,10 @@ import GenericRound from "./quiz/generic-round.vue";
 import { ref, type Ref } from "vue";
 import { type Quiz } from "@/quizTypes";
 
+import { useRoute, useRouter } from "vue-router";
+const router = useRouter();
+const route = useRoute();
+
 const props = defineProps<{
     quiz: Quiz
 }>();
@@ -17,6 +21,11 @@ enum QuizPhase {
 type QuizProgress = {phase: QuizPhase.TitleScreen|QuizPhase.ExitScreen} | 
     {phase: QuizPhase.Rounds, roundIdx: number};
 const progress: Ref<QuizProgress> = ref({phase: QuizPhase.TitleScreen});
+
+if (props.quiz.rounds.length === 0) {
+    alert("Quiz has no rounds");
+    router.go(-1);
+}
 
 function forward() {
     if (progress.value.phase === QuizPhase.TitleScreen) {
