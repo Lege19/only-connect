@@ -17,5 +17,5 @@ async function clicked() {
 
 <template>
     <AreYouSure ref="areYouSure"></AreYouSure>
-    <img @click="clicked" src="@/assets/images/cross.svg">
+    <img @click.exact="clicked" @click.shift.exact="$emit('delete')" src="@/assets/images/cross.svg">
 </template>
