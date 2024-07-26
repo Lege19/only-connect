@@ -55,7 +55,7 @@ function addQuestion() {
         v-model="model.questions[i]" 
         @delete="model.questions.splice(i, 1)"
         :round-type="model.type"></GenericQuestion>
-        <NewItem :func="addQuestion"></NewItem>
+        <NewItem @new="addQuestion"></NewItem>
     </div>
 </template>
 
