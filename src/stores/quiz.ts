@@ -20,6 +20,7 @@ const useQuiz = defineStore("quiz", () => {
     }
     function saveCurrent() {
         if (!json.value) return;
+        json.value.edited = new Date();
         saveQuiz(json.value);
     }
     function close() {
