@@ -14,20 +14,20 @@ const quizStore = useQuiz();
 const route = useRoute();
 
 type State = {loaded: false} | 
-{loaded: true, data: Quiz};
+{loaded: true, quiz: Quiz};
 
 const state: Ref<State> = ref({loaded: false});
 
 async function init() {
     if (route.params.id === "") {
         if (quizStore.json) {
-            state.value = {loaded: true, data: quizStore.json};
+            state.value = {loaded: true, quiz: quizStore.json};
         } else {
-            state.value = {loaded: true, data: await newQuiz()};
+            state.value = {loaded: true, quiz: await newQuiz()};
         }
-        router.replace("/create/" + state.value.data.id);
+        router.replace("/create/" + state.value.quiz.id);
     } else {
-        state.value = {loaded: true, data: await loadQuiz(route.params.id as string)}
+        state.value = {loaded: true, quiz: await loadQuiz(route.params.id as string)}
     }
 }
 init();
@@ -35,5 +35,5 @@ init();
 
 <template>
     <CreateSidebar></CreateSidebar>
-    <QuizEditor v-if="state.loaded" v-model="state.data"></QuizEditor>
+    <QuizEditor v-if="state.loaded" v-model="state.quiz"></QuizEditor>
 </template>

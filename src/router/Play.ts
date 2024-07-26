@@ -1,6 +1,6 @@
 import Play from "@/views/Play.vue";
 const route = {
-    path: "/play",
+    path: "/play/:id?",
     name: "play",
     component: Play
 };
