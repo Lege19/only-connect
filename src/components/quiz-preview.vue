@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Quiz } from "@/quizTypes";
-import { ref, type Ref } from "vue";
+import DeleteItem from "./editor/delete-item.vue";
 
 defineProps<{
     quiz: Quiz
@@ -40,7 +40,7 @@ function formatDate(date: Date): string {
         <div class="icons">
             <img src="@/assets/images/play.svg" @click.stop="$emit('play')">
             <img src="@/assets/images/download.svg" @click.stop="$emit('download')">
-            <img src="@/assets/images/cross.svg" @click.stop="$emit('delete')">
+            <DeleteItem @delete="$emit('delete')"></DeleteItem>
         </div>
     </div>
 </template>

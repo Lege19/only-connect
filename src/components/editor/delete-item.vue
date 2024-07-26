@@ -1,9 +1,21 @@
 <script setup lang="ts">
-defineEmits<{
+import AreYouSure from '@/components/are-you-sure.vue';
+import { ref, type Ref } from "vue";
+
+const emit = defineEmits<{
     (e: "delete"): void
 }>();
+const areYouSure: Ref<null|typeof AreYouSure> = ref(null);
+
+async function clicked() {
+    if (!areYouSure.value) return;
+    if (await areYouSure.value.test()) {
+        emit("delete");
+    }
+}
 </script>
 
 <template>
-    <img @click="$emit('delete')" src="@/assets/images/cross.svg">
+    <AreYouSure ref="areYouSure"></AreYouSure>
+    <img @click="clicked" src="@/assets/images/cross.svg">
 </template>

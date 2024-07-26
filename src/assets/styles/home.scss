@@ -42,10 +42,9 @@
                         justify-content: flex-end;
                         grid-column: 4;
                         padding: 0.2em;
+                        gap: 0.5em;
                         img {
                             visibility: hidden;
-                            margin-left: 0.25em;
-                            margin-right: 0.25em;
                         }
                     }
                     &:hover .icons img {
