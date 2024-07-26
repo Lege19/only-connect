@@ -61,7 +61,7 @@
                 .quiz-preview {
                     width: 100%;
                     display: contents;
-                    &:nth-child(even) * {
+                    &:nth-child(even) > * {
                         background-color: base.$accent-color;
                     }
                     .icons {
