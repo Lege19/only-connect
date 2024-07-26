@@ -13,12 +13,12 @@ defineEmits<{
 
 <template>
     <div v-if="model">
-        <InputBox v-model="model.name">
+        <InputBox v-model="model.name" placeholder="Phrase Category">
             <DeleteItem @delete="$emit('delete')"></DeleteItem>
         </InputBox>
         <ol>
             <li v-for="i in model.phrases.keys()">
-                <InputBox v-model="model.phrases[i]">
+                <InputBox v-model="model.phrases[i]" placeholder="Phrase">
                     <DeleteItem @delete="model.phrases.splice(i, 1)"></DeleteItem>
                 </InputBox>
             </li>

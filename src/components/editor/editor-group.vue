@@ -12,7 +12,7 @@ defineEmits<{
 
 <template>
     <div v-if="model">
-        <InputBox v-model="model.name">
+        <InputBox v-model="model.name" placeholder="Group Caption">
             <DeleteItem @delete="$emit('delete')"></DeleteItem>
         </InputBox>
         <ol>

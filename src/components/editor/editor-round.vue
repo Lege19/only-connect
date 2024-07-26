@@ -46,7 +46,7 @@ function addQuestion() {
 
 <template>
     <div class="round-container" v-if="model">
-            <InputBox v-model="model.name" class="round-name">
+            <InputBox v-model="model.name" class="round-name" placeholder="Round Name">
                 <p class="round-type">{{ ["Connection", "Sequence", "Wall", "Vowel"][model!.type] }}</p>
                 <MoveItem v-model="moveModel" :index="index"></MoveItem>
                 <DeleteItem @delete="$emit('delete')"></DeleteItem>

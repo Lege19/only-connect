@@ -51,7 +51,7 @@ async function newQuiz(): Promise<Quiz> {
     const os = transaction.objectStore('quizes');
 
     const quiz = {
-        name: "Unamed Quiz",
+        name: "",
         id: nanoid(),
         created: new Date(),
         edited: new Date(),

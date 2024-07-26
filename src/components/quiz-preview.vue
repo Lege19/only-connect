@@ -34,7 +34,7 @@ function formatDate(date: Date): string {
 
 <template>
     <div @dblclick="$emit('edit')">
-        <b id="name">{{ quiz.name }}</b>
+        <b id="name">{{ quiz.name !== "" ? quiz.name:"Unamed Quiz" }}</b>
         <b id="edited">{{ formatDate(quiz.edited) }}</b>
         <b id="created">{{ formatDate(quiz.created) }}</b>
         <div class="icons">

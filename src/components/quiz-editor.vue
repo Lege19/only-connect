@@ -35,7 +35,7 @@ function addRound(type: RoundType) {
 
 <template>
     <div id="editor-container" v-if="quiz">
-        <InputBox v-model="quiz.name"></InputBox>
+        <InputBox v-model="quiz.name" placeholder="Quiz Name"></InputBox>
         <ol style="width: 60%">
             <li v-for="i in quiz.rounds.keys()" style="margin-bottom: 1em">
                 <EditorRound 
