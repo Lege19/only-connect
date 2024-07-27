@@ -41,7 +41,7 @@ function addImageQuestion() {
             v-model="model.questions[i]" 
             @delete="model.questions.splice(i, 1)"
         ></Group>
-        <div class="add-question">
+        <div class="add-question" v-if="model.questions.length < 6">
             <div class="dashed-outline" @click="addTextQuestion">
                 <img src="@/assets/images/add.svg">
                 <img src="@/assets/images/text.svg">

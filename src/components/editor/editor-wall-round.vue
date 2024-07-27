@@ -32,6 +32,6 @@ function addQuestion() {
             v-model="model.questions[i]" 
             @delete="model.questions.splice(i, 1)"
         ></WallQuestion>
-        <NewItem @click="addQuestion"></NewItem>
+        <NewItem @click="addQuestion" v-if="model.questions.length < 6"></NewItem>
     </div>
 </template>
