@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import EditorGroup from "./editor-group.vue";
-import WallQuestion from "./wall-question.vue";
-import VowelQuestion from "./vowel-question.vue";
+import WallQuestion from "./editor-wall-question.vue";
+import VowelQuestion from "./editor-vowel-question.vue";
 import { type Ref, computed } from "vue";
 import { type Question, RoundType } from "@/quizTypes";
 const model: Ref<Question|undefined> = defineModel();

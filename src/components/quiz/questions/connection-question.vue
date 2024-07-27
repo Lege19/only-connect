@@ -44,7 +44,13 @@ function back() {
         @keydown.arrow-left="back"
     >
         <TransitionGroup tag="div" class="card-group" name="card">
-            <GenericCard v-for="[index, card] in question.cards.slice(0, cardsShown).entries()" class="card-in-group" :key="index" :card="card"></GenericCard>
+            <GenericCard 
+                v-for="[index, card] in question.cards.slice(0, cardsShown).entries()" 
+                class="card-in-group" 
+                :key="index" 
+                :card="card"
+                :type="question.type"
+            ></GenericCard>
         </TransitionGroup>
         <Transition name="caption">
             <GroupCation v-if="showCaption">{{ question.name }}</GroupCation>

@@ -1,0 +1,87 @@
+@use 'base';
+
+
+#editor-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    ol {
+        width: 60%;
+        li {
+            margin-bottom: 5px;
+            .editor-round {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1em;
+                .round-name {
+                    grid-column: 1/span 2;
+                    .round-type {
+                        opacity: 0.5
+                    }
+                }
+            }
+        }
+    }
+    #new-round-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1em;
+        .button {
+            height: 2em;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+    .input-box {
+        background-color: base.$ui-background-color;
+        padding: 5px;
+        margin: 5px;
+        border-radius: 10px;
+        display: grid;
+        grid-template-columns: 1fr max-content;
+        align-items: center;
+        textarea {
+            background-color: transparent;
+            border: 2px none;
+            outline: none;
+            resize: none;
+            color: white;
+            font-size: 1em;
+            padding: 0;
+            margin: 0;
+        }
+        .icons {
+            display: flex;
+            align-content: center;
+            gap: 0.5em;
+        }
+    }
+    
+    .dashed-outline {
+        border: 3px gray dashed;
+        border-radius: 10px;
+        height: 2em;
+        display: flex;
+        align-content: center;
+        justify-content: center;
+    }
+    
+    .wall-container {
+        display: grid;
+        grid-template-columns: 1fr max-content;
+        align-items: center;
+        grid-column: 1/span 2;
+        .inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1em;
+            border: 4px base.$ui-background-color solid;
+            border-radius: 10px;
+            margin-right: 0.5em;
+        }
+    }
+}
+

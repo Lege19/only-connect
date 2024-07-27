@@ -5,8 +5,6 @@ import CreateMenu from "@/components/menus/create-menu.vue"
 import { router } from "@/router/index";
 import { useRoute } from "vue-router";
 import { newQuiz, loadQuiz } from "@/saveManager";
-import { ref, type Ref } from "vue";
-import type { Quiz } from "@/quizTypes";
 
 import useQuiz from "@/stores/quiz";
 const quiz = useQuiz();

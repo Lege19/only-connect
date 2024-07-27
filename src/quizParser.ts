@@ -1,5 +1,5 @@
-import type {Quiz, Card, Group, WallQuestion, VowelQuestion, Round, ConnectionRound, SequenceRound, WallRound, VowelRound} from "@/quizTypes";
-import {CardType, RoundType} from '@/quizTypes';
+import type {Quiz, Group, TextGroup, WallQuestion, VowelQuestion, Round, ConnectionRound, SequenceRound, WallRound, VowelRound, Tuple4} from "@/quizTypes";
+import {GroupType, RoundType} from '@/quizTypes';
 
 function isArray(arr: unknown): arr is unknown[] {
     return Array.isArray(arr);
@@ -31,49 +31,26 @@ function isRound(json: unknown): json is {name: string, type: RoundType, questio
         hasName(json) &&
         hasType(json);
 }
-export function parseCard(json: unknown, location: string = "unknown"): undefined|Card {
-    if (!(
-        isObject(json) &&
-        "data" in json &&
-        typeof json.data === "string" &&
-        hasType(json)
-    )) {
-        console.error("error parsing json: invalid card signature\nat " + location);
-        return;
-    }
-
-    if (!(json.type in CardType)) {
-        console.error("error parsing json: invalid card type\nat " + location);
-        return;
-    }
-    return {
-        type: json.type,
-        data: json.data
-    }
-}
 export function parseGroup(json: unknown, location: string = "unknown"): undefined|Group {
     if (!(
         isObject(json) &&
         "cards" in json &&
-        isArray(json.cards) &&
-        hasName(json)
+        isStringArray(json.cards) &&
+        json.cards.length === 4 &&
+        hasName(json) &&
+        hasType(json)
     )) {
         console.error("error parsing json: invalid group signature\nat " + location);
         return;
     }
-
-    let currentCard: undefined|Card;
-    let cards: Card[] = [];
-    for (let i = 0; i < 4; i++) {
-        currentCard = parseCard(json.cards[i], location + ", card: " + (i + 1));
-        if (!currentCard) {
-            return;
-        }
-        cards.push(currentCard);
+    if (!(json.type in GroupType)) {
+        console.error("error parsing json: invalid group type\nat " + location);
+        return;
     }
     return {
+        type: json.type,
         name: json.name,
-        cards: cards as any
+        cards: json.cards as Tuple4<string>
     };
 }
 export function parseWallQuestion(json: unknown, location: string = "unknown"): undefined|WallQuestion {
@@ -84,10 +61,14 @@ export function parseWallQuestion(json: unknown, location: string = "unknown"): 
         return;
     }
     let currentGroup: undefined|Group;
-    let groups: Group[] = [];
+    let groups: TextGroup[] = [];
     for (let i = 0; i < 4; i++) {
         currentGroup = parseGroup(json[i], location + ", group: " + (i + 1));
         if (!currentGroup) return;
+        if (currentGroup.type !== GroupType.Text) {
+            console.error("error parsing json: non-text group in a wall\nat " + location);
+            return;
+        }
         groups.push(currentGroup);
     }
     return groups as WallQuestion;

@@ -14,38 +14,10 @@ defineProps<{
 </script>
 
 <template>
-    <div class="container">
+    <div class="input-box">
         <textarea rows="1" @input="resizeTextarea" ref="textarea" v-model="model" :placeholder="placeholder"></textarea>
         <div class="icons">
             <slot></slot>
         </div>
     </div>
 </template>
-
-<style scoped lang="scss">
-@use '@/assets/styles/base';
-.container {
-    background-color: base.$ui-background-color;
-    padding: 5px;
-    margin: 5px;
-    border-radius: 10px;
-    display: grid;
-    grid-template-columns: 1fr max-content;
-    align-items: center;
-}
-textarea {
-    background-color: transparent;
-    border: 2px none;
-    outline: none;
-    resize: none;
-    color: white;
-    font-size: 1em;
-    padding: 0;
-    margin: 0;
-}
-.icons {
-    display: flex;
-    align-content: center;
-    gap: 0.5em;
-}
-</style>

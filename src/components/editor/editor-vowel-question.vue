@@ -22,7 +22,7 @@ defineEmits<{
                     <DeleteItem @delete="model.phrases.splice(i, 1)"></DeleteItem>
                 </InputBox>
             </li>
-            <NewItem @new="model.phrases.push('')"></NewItem>
+            <NewItem @click="model.phrases.push('')"></NewItem>
         </ol>
     </div>
 </template>

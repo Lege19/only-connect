@@ -2,7 +2,7 @@
 import GenericCard from "@/components/quiz/generic-card.vue";
 import GroupCation from "@/components/quiz/group-caption.vue";
 import { computed, ref, type Ref} from "vue";
-import { type Card, type Group, type WallQuestion } from "@/quizTypes";
+import { GroupType, type Group, type WallQuestion } from "@/quizTypes";
 
 const props = defineProps<{
     question: WallQuestion
@@ -13,7 +13,7 @@ const emit = defineEmits<{
 }>();
 
 type WallCard = {
-    card: Card,
+    card: string,
     group: number
 };
 
@@ -137,6 +137,7 @@ function back() {
         >
             <GenericCard 
                 v-for="cardIndex in wallState.cardOrder" 
+                :type="GroupType.Text"
                 :key="cardIndex" 
                 :card="cards[cardIndex].card" 
                 @click="cardClicked(cardIndex)"

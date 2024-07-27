@@ -1,4 +1,4 @@
-export enum CardType {
+export enum GroupType {
     Text,
     Image
 };
@@ -14,20 +14,39 @@ export const GroupColor = [
     "darkred",
     "deepskyblue"
 ];
-export type Card = {
-    type: CardType,
-    data: string
-};
+export type Tuple4<T> = [T, T, T, T]
 
-export type Group = {
+export type TextGroup = {
+    type: GroupType.Text,
     name: string,
-    cards: [Card, Card, Card, Card]
+    cards: Tuple4<string>
 };
+export type ImageGroup = {
+    type: GroupType.Image,
+    name: string,
+    cards: Tuple4<string>
+};
+export type Group = ImageGroup|TextGroup;
+
+export function blankGroup(type: GroupType): Group {
+    return {
+        type: type, 
+        name: "", 
+        cards: Array(4).fill("")
+    } as Group;
+}
+export const blankTextGroup = (): TextGroup => blankGroup(GroupType.Text) as TextGroup;
+export const blankImageGroup = (): ImageGroup => blankGroup(GroupType.Image) as ImageGroup;
+
 export type VowelQuestion = {
     name: string,
     phrases: string[]
 };
-export type WallQuestion = [Group, Group, Group, Group];
+export const blankVowelQuestion = () => ({name: "", phrases: []});
+
+export type WallQuestion = Tuple4<TextGroup>;
+export const blankWallQuestion = (): WallQuestion => Array.from({length: 4}, blankTextGroup) as WallQuestion;
+
 export type Question = Group|VowelQuestion|WallQuestion;
 export type Round = ConnectionRound|SequenceRound|WallRound|VowelRound
 export type ConnectionRound = {
@@ -59,3 +78,6 @@ export type Quiz = {
     edited: Date,
     rounds: Round[]
 };
+
+
+

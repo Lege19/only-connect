@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { type Group } from "@/quizTypes";
+import { GroupType, type Group } from "@/quizTypes";
 import { type Ref } from "vue";
 import InputBox from "./input-box.vue";
 import DeleteItem from "./delete-item.vue";
+import ImageCard from "./editor-image-card.vue";
 const model: Ref<Group|undefined> = defineModel();
 
 defineProps<{
@@ -20,7 +21,8 @@ defineEmits<{
         </InputBox>
         <ol>
             <li v-for="i in model.cards.keys()">
-                <InputBox v-model="model.cards[i].data"></InputBox>
+                <InputBox v-model="model.cards[i]" v-if="model.type === GroupType.Text"></InputBox>
+                <ImageCard v-model="model.cards[i]" v-else></ImageCard>
             </li>
         </ol>
     </div>

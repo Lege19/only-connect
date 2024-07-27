@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import TextCard from "./cards/text-card.vue";
 import ImgCard from "./cards/img-card.vue";
-import { type Card, CardType, GroupColor } from "@/quizTypes";
+import { GroupType, GroupColor } from "@/quizTypes";
 
 import { computed } from "vue";
 
 const props = defineProps<{
-    card: Card,
+    card: string,
+    type: GroupType
     group?: number,
     highlight?: boolean
 }>();
@@ -18,10 +19,10 @@ const styleOverride = computed(() => {
     return style;
 });
 function getCardType() {
-    switch (props.card.type) {
-        case CardType.Text:
+    switch (props.type) {
+        case GroupType.Text:
             return TextCard;
-        case CardType.Image:
+        case GroupType.Image:
             return ImgCard;
     }
 }
@@ -30,7 +31,7 @@ function getCardType() {
 <template>
     <component 
         :is="getCardType()" 
-        :data="props.card.data" 
+        :data="props.card" 
         :style="styleOverride" 
         :class="{'highlight': highlight}"
     ></component>
