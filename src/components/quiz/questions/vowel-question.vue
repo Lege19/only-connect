@@ -100,4 +100,7 @@ function back() {
     display: flex;
     justify-content:center;
 }
+h1 {
+    white-space: pre;
+}
 </style>

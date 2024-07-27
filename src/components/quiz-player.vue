@@ -74,6 +74,7 @@ defineExpose({ resetQuiz, prevRound: back, nextRound: forward });
                 :round="quiz.rounds[progress.roundIdx]" 
                 @next-round="forward" 
                 @prev-round="back"
+                :key="progress.roundIdx"
             ></GenericRound>
         </transition>
     </div>

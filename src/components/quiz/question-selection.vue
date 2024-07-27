@@ -10,7 +10,7 @@ defineEmits<{
 </script>
 
 <template>
-    <div class=".container">
+    <div class="container">
         <QuestionCard v-for="[index, done] in questionsDone.entries()" 
             :index="index" 
             :used="done" 

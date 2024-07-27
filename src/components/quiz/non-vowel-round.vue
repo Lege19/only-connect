@@ -26,6 +26,9 @@ const questionsDone: Ref<boolean[]> = ref(Array(props.round.questions.length).fi
 function forward() {
     if (!progress.value.started) {
         progress.value = {started: true, pickQuestion: true};
+        if (props.round.questions.length === 0) {
+            emit("nextRound");
+        }
     }
 }
 function back() {
