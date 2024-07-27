@@ -46,14 +46,14 @@ async function deleteQuizAtIndex(index: number) {
 
 <template>
     <div id="home-page-container">
-        <h1>Only Connect</h1>
+        <h1>Only Connect Maker</h1>
         <AreYouSure ref="areYouSureRef"></AreYouSure>
         <div id="quiz-manager">
             <div id="buttons-container">
                 <div class="button" @click="router.push('/create')">
                     <p>
                         New Quiz
-                        <img src="@/assets/images/add.svg">
+                        <img src="@/assets/images/fat-add.svg">
                     </p>
                 </div>
                 <UploadQuiz></UploadQuiz>

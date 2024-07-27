@@ -33,7 +33,7 @@ async function openImage(event: Event) {
 <template>
     <div v-if="model !== undefined" class="editor-image-card">
         <div v-if="model !== ''" class="image-container">
-            <img :src="model">
+            <div><img :src="model"></div>
             <DeleteItem @delete="model=''"></DeleteItem>
         </div>
         <label v-else>
@@ -57,7 +57,8 @@ async function openImage(event: Event) {
         align-items: center;
     }
     img {
-        width: 100%;
+        object-fit:contain;
+        max-width: 100%;
     }
 }
 </style>
