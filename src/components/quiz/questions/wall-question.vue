@@ -3,6 +3,7 @@ import GenericCard from "@/components/quiz/generic-card.vue";
 import GroupCation from "@/components/quiz/group-caption.vue";
 import { computed, ref, type Ref} from "vue";
 import { GroupType, type Group, type WallQuestion } from "@/quizTypes";
+import { bindKeys } from "@/utils";
 
 const props = defineProps<{
     question: WallQuestion
@@ -119,15 +120,13 @@ function back() {
         wallState.value.groupsFound.pop();
     }
 }
+bindKeys(forward, back);
 </script>
 
 <template>
     <div
         class="question-container" 
         @click="forward" 
-        @keydown.arrow-right="forward" 
-        @keydown.space="forward"
-        @keydown.arrow-left="back"
     >
         <TransitionGroup
             tag="div" 

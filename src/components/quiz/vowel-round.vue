@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import VowelQuestion from "./questions/vowel-question.vue";
-import RoundTitle from "./round-title.vue";
+import FullPageTitle from "./full-page-title.vue";
 import type { VowelRound } from "@/quizTypes";
 import { ref, type Ref } from 'vue';
 
@@ -39,13 +39,12 @@ function back() {
 
 <template>
     <Transition mode="out-in" name="fade">
-        <RoundTitle 
+        <FullPageTitle 
             v-if="!progress.started" 
             @click="forward" 
-            @keydown.arrow-right="forward"
-            @keydown.space="forward"
-            @keydown.arrow-left="back"
-        >{{ round.name }}</RoundTitle>
+            @forward="forward"
+            @back="back"
+        >{{ round.name }}</FullPageTitle>
         <VowelQuestion 
             v-else="progress.started"
             :question="round.questions[progress.currentQuestion]"

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import RoundTitle from "./round-title.vue";
+import FullPageTitle from "./full-page-title.vue";
 import QuestionSelection from "./question-selection.vue";
 import ConnectionQuestion from "./questions/connection-question.vue";
 import SequenceQuestion from "./questions/sequence-question.vue";
@@ -54,17 +54,16 @@ function questionCanceled() {
 
 <template>
     <Transition name="fade" mode="out-in">
-        <RoundTitle 
+        <FullPageTitle 
             v-if="!progress.started" 
-            @click="forward" 
-            @keydown.arrow-right="forward"
-            @keydown.space="forward"
-        >{{ round.name }}</RoundTitle>
+            @forward="forward"
+            @back="back"
+        >{{ round.name }}</FullPageTitle>
         <QuestionSelection 
             v-else-if="progress.pickQuestion" 
             :questions-done="questionsDone"
             @card-clicked="cardClicked"
-            @keydown.arrow-left="back"
+            @back="back"
         ></QuestionSelection>
         <ConnectionQuestion 
             v-else-if="round.type === RoundType.Connection" 

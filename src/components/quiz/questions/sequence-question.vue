@@ -4,7 +4,8 @@ import { type Group } from "@/quizTypes";
 import GenericCard from "../generic-card.vue";
 import GroupCation from "../group-caption.vue";
 
-import { ref, type Ref, watch } from "vue";
+import { ref, type Ref, } from "vue";
+import { bindKeys } from "@/utils";
 
 defineProps<{
     question: Group
@@ -35,15 +36,13 @@ function back() {
         cardsShown.value--;
     }
 }
+bindKeys(forward, back);
 </script>
 
 <template>
     <div
         class="question-container" 
         @click="forward" 
-        @keydown.arrow-right="forward" 
-        @keydown.space="forward" 
-        @keydown.arrow-left="back"
     >
         <TransitionGroup tag="div" class="card-group" name="card">
             <GenericCard 

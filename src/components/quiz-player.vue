@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import QuizTitle from "./quiz/quiz-title.vue";
+import FullPageTitle from "./quiz/full-page-title.vue";
 import GenericRound from "./quiz/generic-round.vue";
 import DynamicPageTitle from "./dynamic-page-title.vue";
 
@@ -62,13 +62,11 @@ defineExpose({ resetQuiz, prevRound: back, nextRound: forward });
     <DynamicPageTitle :title="quiz.name + ' - Playing'"></DynamicPageTitle>
     <div id="quiz-player">
         <transition mode="out-in" name="fade">
-            <QuizTitle 
+            <FullPageTitle 
                 v-if="progress.phase !== QuizPhase.Rounds" 
-                @click="forward" 
-                @keydown.arrow-right="forward" 
-                @keydown.space="forward"
-                @keydown.arrow-left="back"
-            >{{ quiz.name }}</QuizTitle>
+                @forward="forward" 
+                @back="back"
+            >{{ quiz.name }}</FullPageTitle>
             <GenericRound 
                 v-else 
                 :round="quiz.rounds[progress.roundIdx]" 
@@ -88,4 +86,4 @@ defineExpose({ resetQuiz, prevRound: back, nextRound: forward });
     width: 100%;
     height: 100%;
 }
-</style>
+</style>./quiz/full-page-title.vue

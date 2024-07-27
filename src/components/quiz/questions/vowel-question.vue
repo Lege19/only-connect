@@ -2,6 +2,8 @@
 import type { VowelQuestion } from "@/quizTypes";
 import { ref, type Ref } from "vue";
 import cloneDeep from 'lodash.clonedeep'
+import { bindKeys } from "@/utils";
+
 const vowels = ["A", "E", "I", "O", "U"];
 
 const props = defineProps<{
@@ -69,14 +71,12 @@ function back() {
         Object.assign(progress.value, getStrings(progress.value.phraseIdx));
     }
 }
+bindKeys(forward, back);
 </script>
 
 <template>
     <div 
         @click="forward" 
-        @keydown.arrow-right="forward" 
-        @keydown.space="forward"
-        @keydown.arrow-left="back" 
         class="question-container"
     >
         <Transition name="fade" mode="out-in">
