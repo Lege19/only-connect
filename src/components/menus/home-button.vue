@@ -5,5 +5,5 @@ const quiz = useQuiz();
 </script>
 
 <template>
-    <img id="home" src="@/assets/images/home.svg" @click="quiz.saveCurrent(); router.push('/')">
+    <img id="home" src="@/assets/images/home.svg" @click="quiz.close(); router.push('/')">
 </template>
