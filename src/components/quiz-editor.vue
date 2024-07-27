@@ -33,6 +33,19 @@ function addRound(type: RoundType) {
         questions: []
     });
 }
+function moveUp(index: number) {
+    if (!quiz.value) return;
+    swapConseutive(quiz.value.rounds, index - 1);
+}
+function moveDown(index: number) {
+    if (!quiz.value) return;
+    swapConseutive(quiz.value.rounds, index)
+}
+function swapConseutive(array: unknown[], index: number) {
+    if (index < 0) return;
+    if (index >= array.length - 1) return;
+    [array[index], array[index + 1]] = [array[index + 1], array[index]];
+}
 </script>
 
 <template>
@@ -44,7 +57,9 @@ function addRound(type: RoundType) {
                 <EditorRound 
                     v-model="quiz.rounds[i]" 
                     v-model:move="quiz.rounds" 
-                    @delete="quiz.rounds.splice(i, 1)" 
+                    @delete="quiz.rounds.splice(i, 1)"
+                    @move-up="moveUp(i)"
+                    @move-down="moveDown(i)"
                     :index="i"
                 ></EditorRound>
             </li>
