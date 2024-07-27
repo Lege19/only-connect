@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import QuizTitle from "./quiz/quiz-title.vue";
 import GenericRound from "./quiz/generic-round.vue";
+import DynamicPageTitle from "./dynamic-page-title.vue";
 
 import { ref, type Ref } from "vue";
 import { type Quiz } from "@/quizTypes";
@@ -58,6 +59,7 @@ defineExpose({ resetQuiz, prevRound: back, nextRound: forward });
 </script>
 
 <template>
+    <DynamicPageTitle :title="quiz.name + ' - Playing'"></DynamicPageTitle>
     <div id="quiz-player">
         <transition mode="out-in" name="fade">
             <QuizTitle 

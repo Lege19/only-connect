@@ -11,6 +11,10 @@ const quiz = useQuiz();
 
 const route = useRoute();
 
+window.addEventListener('beforeunload', () => {
+    quiz.saveCurrent();
+});
+
 async function init() {
     if (route.params.id === "") {
         if (!quiz.json) {

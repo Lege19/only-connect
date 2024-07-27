@@ -20,9 +20,6 @@ async function loadQuizes() {
     quizes.value = {loaded: true, data: await loadAll()};
 }
 loadQuizes();
-
-const areYouSureRef: Ref<null|typeof AreYouSure> = ref(null);
-
 function edit(quiz: Quiz) {
     quizStore.open(quiz);
     router.push("/create");
@@ -36,8 +33,6 @@ function download(quiz: Quiz) {
 }
 async function deleteQuizAtIndex(index: number) {
     if (!quizes.value.loaded) return;
-    if (!areYouSureRef.value) return;
-    if (!await areYouSureRef.value.test()) return;
 
     deleteQuiz(quizes.value.data[index].id);
     quizes.value.data.splice(index, 1);
@@ -47,7 +42,6 @@ async function deleteQuizAtIndex(index: number) {
 <template>
     <div id="home-page-container">
         <h1>Only Connect Maker</h1>
-        <AreYouSure ref="areYouSureRef"></AreYouSure>
         <div id="quiz-manager">
             <div id="buttons-container">
                 <div class="button" @click="router.push('/create')">

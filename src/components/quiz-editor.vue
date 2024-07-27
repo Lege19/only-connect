@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import EditorRound from "./editor/editor-generic-round.vue";
 import InputBox from "./editor/input-box.vue";
+import DynamicPageTitle from "./dynamic-page-title.vue";
+
 import { RoundType } from "@/quizTypes";
 import { watch, type Ref } from 'vue';
 import { saveQuiz } from '@/saveManager';
@@ -34,6 +36,7 @@ function addRound(type: RoundType) {
 </script>
 
 <template>
+    <DynamicPageTitle :title="quiz?.name + ' - Editing'"></DynamicPageTitle>
     <div id="editor-container" v-if="quiz">
         <InputBox v-model="quiz.name" placeholder="Quiz Name"></InputBox>
         <ol>
