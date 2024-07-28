@@ -18,6 +18,7 @@ type VowelRoundProgress = {started: false} |
 const progress: Ref<VowelRoundProgress> = ref({started: false});
 
 function forward() {
+    console.log("forward");
     if (!progress.value.started) {
         progress.value = {started: true, currentQuestion: 0};
     } else if (progress.value.currentQuestion + 1 < props.round.questions.length){
@@ -41,7 +42,6 @@ function back() {
     <Transition mode="out-in" name="fade">
         <FullPageTitle 
             v-if="!progress.started" 
-            @click="forward" 
             @forward="forward"
             @back="back"
         >{{ round.name }}</FullPageTitle>
