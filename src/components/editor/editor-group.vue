@@ -16,12 +16,12 @@ defineEmits<{
 
 <template>
     <div v-if="model">
-        <InputBox v-model="model.name" placeholder="Group Caption">
+        <InputBox v-model="model.name" placeholder="Connection">
             <DeleteItem v-if="!undeletable" @delete="$emit('delete')"></DeleteItem>
         </InputBox>
         <ol>
             <li v-for="i in model.cards.keys()">
-                <InputBox v-model="model.cards[i]" v-if="model.type === GroupType.Text"></InputBox>
+                <InputBox v-model="model.cards[i]" v-if="model.type === GroupType.Text" placeholder="Clue"></InputBox>
                 <ImageCard v-model="model.cards[i]" v-else></ImageCard>
             </li>
         </ol>
