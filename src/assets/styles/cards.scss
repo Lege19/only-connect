@@ -26,6 +26,7 @@
     justify-content: center;
     transition: background-color 0.25s, transform 0.5s ease, outline 0.5s ease;
     outline: white solid 0px;
+    whitespace: preserve;
     &.highlight {
         outline: white solid 5px;
     }
@@ -37,7 +38,6 @@
     flex-basis: 25%;
     font-family: "Noto Sans Egyptian Hieroglyphs";
 }
-
 .used-card {
     background-color: base.$used-card-color;
 }
