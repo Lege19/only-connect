@@ -37,6 +37,11 @@ async function deleteQuizAtIndex(index: number) {
     deleteQuiz(quizes.value.data[index].id);
     quizes.value.data.splice(index, 1);
 }
+
+function quizUploaded(quiz: Quiz) {
+    if (!quizes.value.loaded) return;
+    quizes.value.data.push(quiz);
+}
 </script>
 
 <template>
@@ -50,7 +55,7 @@ async function deleteQuizAtIndex(index: number) {
                         <img src="@/assets/images/fat-add.svg">
                     </p>
                 </div>
-                <UploadQuiz></UploadQuiz>
+                <UploadQuiz @uploaded="quizUploaded"></UploadQuiz>
             </div>
             <div id="quiz-grid">
                 <div v-if="quizes.loaded" id="inner">

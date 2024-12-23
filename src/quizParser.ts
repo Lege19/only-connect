@@ -125,6 +125,8 @@ export function parseWallRound(
     let currentQuestion: undefined|WallQuestion;
     for (let i = 0; i < json.questions.length; i++) {
         currentQuestion = parseWallQuestion(json.questions[i], location + ", question " + (i + 1))
+        if (currentQuestion === undefined) return;
+        questions.push(currentQuestion);
     }
     return {
         ...json,
