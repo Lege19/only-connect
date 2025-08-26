@@ -185,7 +185,7 @@ export function parseRound(json: unknown, location: string = "unknown"): undefin
             return;
     }
 }
-export function parseJson(json: any): undefined|Quiz {
+export function parseJson(json: unknown): undefined|Quiz {
     if (!(
         hasName(json) &&
         "rounds" in json &&

@@ -11,13 +11,16 @@ async function tryInit() {
     dbStore = useDb();
     db = await dbStore.db;
 }
-async function saveQuiz(quiz: Quiz): Promise<void> {
-    await tryInit();
 
+async function saveQuizToDb(quiz: Quiz, db: IDBDatabase): Promise<void> {
     const transaction = db.transaction('quizes', 'readwrite');
     const os = transaction.objectStore('quizes');
     const query = os.put(cloneDeep(quiz));
     await dbRequestToPromise(query);
+}
+async function saveQuiz(quiz: Quiz): Promise<void> {
+    await tryInit();
+    await saveQuizToDb(quiz, db);
 }
 
 async function loadQuiz(id: string): Promise<Quiz> {
@@ -76,4 +79,4 @@ function dbRequestToPromise<T>(req: IDBRequest<T>): Promise<T> {
         }
     });
 }
-export { saveQuiz, loadQuiz, loadAll, deleteQuiz, newQuiz };
+export { saveQuiz, saveQuizToDb, loadQuiz, loadAll, deleteQuiz, newQuiz };
